@@ -1,6 +1,14 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { MantineProvider } from "@mantine/core";
+import {
+  RouterProvider,
+  createRouter,
+  LinkComponentProps,
+} from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
+
+import "@mantine/core/styles.css";
 
 // Set up a Router instance
 const router = createRouter({
@@ -15,9 +23,19 @@ declare module "@tanstack/react-router" {
   }
 }
 
+declare module "@mantine/core" {
+  interface AnchorProps extends LinkComponentProps {}
+}
+
 const rootElement = document.getElementById("app")!;
 
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
-  root.render(<RouterProvider router={router} />);
+  root.render(
+    <React.StrictMode>
+      <MantineProvider>
+        <RouterProvider router={router} />
+      </MantineProvider>
+    </React.StrictMode>
+  );
 }
