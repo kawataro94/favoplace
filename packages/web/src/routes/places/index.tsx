@@ -18,7 +18,7 @@ function PlaceComponent() {
     <Table>
       <Table.Thead>
         <Table.Tr>
-          <Table.Th>Places</Table.Th>
+          <Table.Th>Place</Table.Th>
           <Table.Th>Visit Count</Table.Th>
         </Table.Tr>
       </Table.Thead>

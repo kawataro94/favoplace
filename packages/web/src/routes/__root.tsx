@@ -18,7 +18,7 @@ function RootComponent() {
           }}
           activeOptions={{ exact: true }}
         >
-          Home
+          Counter
         </Anchor>
         <Anchor
           component={Link}
