@@ -37,7 +37,9 @@ export class PlacesService {
   }
 
   async findOneById(id: string): Promise<Place> {
-    return {} as any;
+    const place = places.find((place) => place.id === id);
+
+    return place as Place;
   }
 
   async findAll(placesArgs: PlacesArgs): Promise<Place[]> {
