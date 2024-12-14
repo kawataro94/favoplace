@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import stylex from "@stylexjs/stylex";
 import { IconHistory } from "@tabler/icons-react";
 import {
@@ -9,28 +10,50 @@ import {
   useMantineTheme,
 } from "@mantine/core";
 import { createFileRoute } from "@tanstack/react-router";
+import { fetchPlaces } from "@web/lib/fetchPlaces";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
 });
 
 function HomeComponent() {
+  const [places, setPlaces] = useState<
+    {
+      id: string;
+      name: string;
+      visitCount: number;
+    }[]
+  >();
+
+  useEffect(() => {
+    (async function () {
+      const { places: _places } = await fetchPlaces();
+      setPlaces(_places);
+    })();
+  }, []);
+
   return (
     <SimpleGrid
       cols={{ base: 1, sm: 2, md: 4 }}
       spacing={{ md: 20 }}
       verticalSpacing={{ md: 20 }}
     >
-      <ImageCard title={"Cafe A"} />
-      <ImageCard title={"Cafe B"} />
-      <ImageCard title={"Cafe C"} />
-      <ImageCard title={"Cafe D"} />
-      <ImageCard title={"Cafe E"} />
+      {places?.map(({ id, name, visitCount }) => (
+        <ImageCard id={id} title={name} visitCount={visitCount} />
+      ))}
     </SimpleGrid>
   );
 }
 
-function ImageCard({ title }: { title: string }) {
+function ImageCard({
+  id,
+  title,
+  visitCount,
+}: {
+  id: string;
+  title: string;
+  visitCount: number;
+}) {
   const theme = useMantineTheme();
 
   const hasImage = false;
@@ -42,6 +65,7 @@ function ImageCard({ title }: { title: string }) {
       {...stylex.props(styles.card)}
       radius="md"
       component="a"
+      href={`/places/${id}`}
     >
       <div
         {...stylex.props(styles.image)}
@@ -70,7 +94,7 @@ function ImageCard({ title }: { title: string }) {
                   color={theme.colors.dark[2]}
                 />
                 <Text size="sm" {...stylex.props(styles.bodyText)}>
-                  1
+                  {visitCount}
                 </Text>
               </Center>
             </Group>
