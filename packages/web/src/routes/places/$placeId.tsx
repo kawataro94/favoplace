@@ -1,8 +1,17 @@
 import { useEffect, useState } from "react";
-import stylex from "@stylexjs/stylex";
+import { Space, Title } from "@mantine/core";
 import { createFileRoute } from "@tanstack/react-router";
-import { Table } from "@mantine/core";
 import { fetchPlace } from "@web/lib/fetchPlace";
+import { PlaceDetails } from "@web/components/feature/place/place-details";
+import { VisitHistoryTable } from "@web/components/feature/visit-history/visit-history-table";
+
+const histories = [
+  { date: "2024-12-15 12:00" },
+  { date: "2024-12-16 12:00" },
+  { date: "2024-12-19 12:00" },
+  { date: "2024-12-21 12:00" },
+  { date: "2024-12-22 12:00" },
+];
 
 export const Route = createFileRoute("/places/$placeId")({
   component: RouteComponent,
@@ -11,7 +20,7 @@ export const Route = createFileRoute("/places/$placeId")({
 function RouteComponent() {
   const { placeId } = Route.useParams();
 
-  const [place, setPlace] = useState<{
+  const [{ name, description, visitCount }, setPlace] = useState<{
     name: string;
     description: string;
     visitCount: number;
@@ -29,31 +38,16 @@ function RouteComponent() {
   }, []);
 
   return (
-    <Table variant="vertical" layout="fixed" withTableBorder>
-      <Table.Tbody>
-        <Table.Tr>
-          <Table.Th w={160} {...stylex.props(styles.th)}>
-            Place
-          </Table.Th>
-          <Table.Td>{place.name}</Table.Td>
-        </Table.Tr>
+    <>
+      <Title order={1}>{name}</Title>
+      <Space h="sm" />
+      <PlaceDetails description={description} visitCount={visitCount} />
 
-        <Table.Tr>
-          <Table.Th {...stylex.props(styles.th)}>Description</Table.Th>
-          <Table.Td>{place.description}</Table.Td>
-        </Table.Tr>
+      <Space h="xl" />
 
-        <Table.Tr>
-          <Table.Th {...stylex.props(styles.th)}>Visit Count</Table.Th>
-          <Table.Td>{place.visitCount}</Table.Td>
-        </Table.Tr>
-      </Table.Tbody>
-    </Table>
+      <Title order={2}>History</Title>
+      <Space h="sm" />
+      <VisitHistoryTable histories={histories} />
+    </>
   );
 }
-
-const styles = stylex.create({
-  th: {
-    backgroundColor: "var(--mantine-color-gray-0)",
-  },
-});
