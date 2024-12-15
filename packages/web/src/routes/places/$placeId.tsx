@@ -1,23 +1,15 @@
 import { useEffect, useState } from "react";
 import stylex from "@stylexjs/stylex";
 import { createFileRoute } from "@tanstack/react-router";
-import { fallback, zodSearchValidator } from "@tanstack/router-zod-adapter";
-import { z } from "zod";
 import { Table } from "@mantine/core";
 import { fetchPlace } from "@web/lib/fetchPlace";
 
-const searchSchema = z.object({
-  view: fallback(z.enum(["list", "gallery"]), "list").default("list"),
-});
-
 export const Route = createFileRoute("/places/$placeId")({
   component: RouteComponent,
-  validateSearch: zodSearchValidator(searchSchema),
 });
 
 function RouteComponent() {
   const { placeId } = Route.useParams();
-  const { view } = Route.useSearch();
 
   const [place, setPlace] = useState<{
     name: string;
