@@ -5,14 +5,6 @@ import { fetchPlace } from "@web/lib/fetchPlace";
 import { PlaceDetails } from "@web/components/feature/place/place-details";
 import { VisitHistoryTable } from "@web/components/feature/visit-history/visit-history-table";
 
-const histories = [
-  { date: "2024-12-15 12:00" },
-  { date: "2024-12-16 12:00" },
-  { date: "2024-12-19 12:00" },
-  { date: "2024-12-21 12:00" },
-  { date: "2024-12-22 12:00" },
-];
-
 export const Route = createFileRoute("/places/$placeId")({
   component: RouteComponent,
 });
@@ -20,15 +12,18 @@ export const Route = createFileRoute("/places/$placeId")({
 function RouteComponent() {
   const { placeId } = Route.useParams();
 
-  const [{ name, description, visitCount }, setPlace] = useState<{
-    name: string;
-    description: string;
-    visitCount: number;
-  }>({
-    name: "",
-    description: "",
-    visitCount: 0,
-  });
+  const [{ name, description, visitCount, visitHistories }, setPlace] =
+    useState<{
+      name: string;
+      description: string;
+      visitCount: number;
+      visitHistories: { date: string }[];
+    }>({
+      name: "",
+      description: "",
+      visitCount: 0,
+      visitHistories: [],
+    });
 
   useEffect(() => {
     (async function () {
@@ -47,7 +42,7 @@ function RouteComponent() {
 
       <Title order={2}>History</Title>
       <Space h="sm" />
-      <VisitHistoryTable histories={histories} />
+      <VisitHistoryTable histories={visitHistories} />
     </>
   );
 }

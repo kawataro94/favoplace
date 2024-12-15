@@ -10,6 +10,12 @@ type Place {
   name: String!
   description: String
   visitCount: Float!
+  visitHistories: [VisitHistory!]!
+}
+
+"""visitHistory"""
+type VisitHistory {
+  date: Date!
 }
 
 """Date custom scalar type"""

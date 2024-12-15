@@ -5,6 +5,7 @@ export async function fetchPlace({ placeId }: { placeId: string }): Promise<{
     name: string;
     description: string;
     visitCount: number;
+    visitHistories: { date: string }[];
   };
 }> {
   const res = gql`
@@ -13,6 +14,9 @@ export async function fetchPlace({ placeId }: { placeId: string }): Promise<{
         name
         description
         visitCount
+        visitHistories {
+          date
+        }
       }
     }
   `;

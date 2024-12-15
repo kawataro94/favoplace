@@ -13,4 +13,13 @@ export class Place {
 
   @Field()
   visitCount: number;
+
+  @Field(() => [VisitHistory])
+  visitHistories: VisitHistory[];
+}
+
+@ObjectType({ description: 'visitHistory' })
+class VisitHistory {
+  @Field()
+  date: Date;
 }
