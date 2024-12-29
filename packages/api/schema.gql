@@ -15,7 +15,7 @@ type Place {
 
 """visitHistory"""
 type VisitHistory {
-  date: Date!
+  date: String!
 }
 
 """Date custom scalar type"""

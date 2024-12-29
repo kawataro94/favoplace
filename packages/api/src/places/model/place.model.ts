@@ -21,5 +21,5 @@ export class Place {
 @ObjectType({ description: 'visitHistory' })
 class VisitHistory {
   @Field()
-  date: Date;
+  date: string;
 }

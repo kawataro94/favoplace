@@ -3,8 +3,8 @@ import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
 import { PubSub } from 'graphql-subscriptions';
 import { NewPlaceInput } from './dto/new-place.input';
 import { PlacesArgs } from './dto/places.args';
-import { Place } from './models/place.model';
 import { PlacesService } from './places.service';
+import { Place } from './model/place.model';
 
 const pubSub = new PubSub();
 
@@ -29,7 +29,7 @@ export class PlacesResolver {
   @Mutation((returns) => Place)
   async addPlace(
     @Args('newPlaceData') newPlaceData: NewPlaceInput,
-  ): Promise<Place> {
+  ): Promise<Omit<Place, 'visitHistories'>> {
     const place = await this.placesService.create(newPlaceData);
     pubSub.publish('placeAdded', { placeAdded: place });
     return place;
