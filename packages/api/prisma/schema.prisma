@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Place {
+  id            String  @id @default(cuid())
+  name          String  @unique
+  description   String?
+  visitCount    Int
+  visitHistories  VisitHistory[]
+}
+
+model VisitHistory {
+  id       String  @id @default(cuid())
+  date     String
+  placeId  String
+  place    Place? @relation(fields: [placeId], references: [id])
+}
