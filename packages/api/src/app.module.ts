@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
-import { PlacesModule } from './places/places.module';
+import { PlacesModule } from './domain/places/places.module';
 
 @Module({
   imports: [

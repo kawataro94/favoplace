@@ -1,12 +1,15 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { Place, VisitHistory } from '@prisma/client';
 import { NewPlaceInput } from './dto/new-place.input';
 import { PlacesArgs } from './dto/places.args';
-import { PrismaService } from '../prisma/prisma.service';
+import { IPlacesRepository } from './places.repository.interface';
+import { repositoryToken } from './constants';
 
 @Injectable()
 export class PlacesService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    @Inject(repositoryToken) private readonly repository: IPlacesRepository,
+  ) {}
 
   async create(data: NewPlaceInput): Promise<Place> {
     return {} as any;
@@ -15,18 +18,13 @@ export class PlacesService {
   async findOneById(
     id: string,
   ): Promise<Place & { visitHistories: VisitHistory[] }> {
-    return this.prisma.place.findUnique({
-      where: { id },
-      include: { visitHistories: true },
-    });
+    return this.repository.findOneById(id);
   }
 
   async findAll(
     placesArgs: PlacesArgs,
   ): Promise<(Place & { visitHistories: VisitHistory[] })[]> {
-    return await this.prisma.place.findMany({
-      include: { visitHistories: true },
-    });
+    return await this.repository.findAll(placesArgs);
   }
 
   async remove(id: string): Promise<boolean> {
