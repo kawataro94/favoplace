@@ -27,6 +27,7 @@ export function PlaceDetails({
 
 const styles = stylex.create({
   th: {
+    width: "160px",
     backgroundColor: "var(--mantine-color-gray-0)",
   },
 });
