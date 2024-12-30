@@ -34,6 +34,6 @@ export class PlacesService {
   }
 
   async remove(id: string): Promise<boolean> {
-    return true;
+    return this.repository.remove(id);
   }
 }

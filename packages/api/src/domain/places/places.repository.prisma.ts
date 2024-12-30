@@ -34,4 +34,9 @@ export class PlacesRepository implements IPlacesRepository {
       },
     });
   }
+
+  async remove(id: string): Promise<boolean> {
+    await this.prisma.place.delete({ where: { id } });
+    return true;
+  }
 }

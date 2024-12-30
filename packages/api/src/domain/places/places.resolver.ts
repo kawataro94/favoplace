@@ -36,7 +36,7 @@ export class PlacesResolver {
   }
 
   @Mutation((returns) => Boolean)
-  async removePlace(@Args('id') id: string) {
+  async removePlace(@Args('id') id: string): Promise<boolean> {
     return this.placesService.remove(id);
   }
 
