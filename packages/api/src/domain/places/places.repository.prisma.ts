@@ -24,4 +24,14 @@ export class PlacesRepository implements IPlacesRepository {
       include: { visitHistories: true },
     });
   }
+
+  async create({ name, description }: { name: string; description: string }) {
+    return await this.prisma.place.create({
+      data: {
+        name,
+        description,
+        visitCount: 0,
+      },
+    });
+  }
 }

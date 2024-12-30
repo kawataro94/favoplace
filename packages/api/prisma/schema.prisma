@@ -11,7 +11,7 @@ datasource db {
 model Place {
   id            String  @id @default(cuid())
   name          String  @unique
-  description   String?
+  description   String
   visitCount    Int
   visitHistories  VisitHistory[]
 }

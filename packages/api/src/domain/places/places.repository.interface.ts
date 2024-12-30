@@ -23,4 +23,16 @@ export interface IPlacesRepository {
       }[];
     }[]
   >;
+  create: ({
+    name,
+    description,
+  }: {
+    name: string;
+    description: string;
+  }) => Promise<{
+    id: string;
+    name: string;
+    description: string;
+    visitCount: number;
+  }>;
 }
