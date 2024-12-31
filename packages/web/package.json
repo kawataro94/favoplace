@@ -21,6 +21,8 @@
   "dependencies": {
     "@mantine/core": "^7.13.5",
     "@mantine/hooks": "^7.13.5",
+    "@mantine/notifications": "^7.15.2",
+    "@stylexjs/stylex": "^0.9.3",
     "@tabler/icons-react": "^3.24.0",
     "@tanstack/react-router": "^1.78.3",
     "@tanstack/router-devtools": "^1.78.3",

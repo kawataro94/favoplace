@@ -6,9 +6,11 @@ import {
   createRouter,
   LinkComponentProps,
 } from "@tanstack/react-router";
+import { Notifications } from "@mantine/notifications";
 import { routeTree } from "./routeTree.gen";
 
 import "@mantine/core/styles.css";
+import "@mantine/notifications/styles.css";
 
 // Set up a Router instance
 const router = createRouter({
@@ -34,6 +36,7 @@ if (!rootElement.innerHTML) {
   root.render(
     <React.StrictMode>
       <MantineProvider>
+        <Notifications />
         <RouterProvider router={router} />
       </MantineProvider>
     </React.StrictMode>
