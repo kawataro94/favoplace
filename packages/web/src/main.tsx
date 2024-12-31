@@ -27,6 +27,7 @@ declare module "@tanstack/react-router" {
 
 declare module "@mantine/core" {
   interface AnchorProps extends LinkComponentProps {}
+  interface ButtonProps extends LinkComponentProps {}
 }
 
 const rootElement = document.getElementById("app")!;

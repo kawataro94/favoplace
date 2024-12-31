@@ -14,6 +14,7 @@ import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
 import { Route as PlacesIndexImport } from './routes/places/index'
 import { Route as PlacesPlaceIdImport } from './routes/places/$placeId'
+import { Route as PlacesNewIndexImport } from './routes/places/new/index'
 
 // Create/Update Routes
 
@@ -32,6 +33,12 @@ const PlacesIndexRoute = PlacesIndexImport.update({
 const PlacesPlaceIdRoute = PlacesPlaceIdImport.update({
   id: '/places/$placeId',
   path: '/places/$placeId',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PlacesNewIndexRoute = PlacesNewIndexImport.update({
+  id: '/places/new/',
+  path: '/places/new/',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -60,6 +67,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlacesIndexImport
       parentRoute: typeof rootRoute
     }
+    '/places/new/': {
+      id: '/places/new/'
+      path: '/places/new'
+      fullPath: '/places/new'
+      preLoaderRoute: typeof PlacesNewIndexImport
+      parentRoute: typeof rootRoute
+    }
   }
 }
 
@@ -69,12 +83,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/places/$placeId': typeof PlacesPlaceIdRoute
   '/places': typeof PlacesIndexRoute
+  '/places/new': typeof PlacesNewIndexRoute
 }
 
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/places/$placeId': typeof PlacesPlaceIdRoute
   '/places': typeof PlacesIndexRoute
+  '/places/new': typeof PlacesNewIndexRoute
 }
 
 export interface FileRoutesById {
@@ -82,14 +98,15 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/places/$placeId': typeof PlacesPlaceIdRoute
   '/places/': typeof PlacesIndexRoute
+  '/places/new/': typeof PlacesNewIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/places/$placeId' | '/places'
+  fullPaths: '/' | '/places/$placeId' | '/places' | '/places/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/places/$placeId' | '/places'
-  id: '__root__' | '/' | '/places/$placeId' | '/places/'
+  to: '/' | '/places/$placeId' | '/places' | '/places/new'
+  id: '__root__' | '/' | '/places/$placeId' | '/places/' | '/places/new/'
   fileRoutesById: FileRoutesById
 }
 
@@ -97,12 +114,14 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PlacesPlaceIdRoute: typeof PlacesPlaceIdRoute
   PlacesIndexRoute: typeof PlacesIndexRoute
+  PlacesNewIndexRoute: typeof PlacesNewIndexRoute
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PlacesPlaceIdRoute: PlacesPlaceIdRoute,
   PlacesIndexRoute: PlacesIndexRoute,
+  PlacesNewIndexRoute: PlacesNewIndexRoute,
 }
 
 export const routeTree = rootRoute
@@ -117,7 +136,8 @@ export const routeTree = rootRoute
       "children": [
         "/",
         "/places/$placeId",
-        "/places/"
+        "/places/",
+        "/places/new/"
       ]
     },
     "/": {
@@ -128,6 +148,9 @@ export const routeTree = rootRoute
     },
     "/places/": {
       "filePath": "places/index.tsx"
+    },
+    "/places/new/": {
+      "filePath": "places/new/index.tsx"
     }
   }
 }
