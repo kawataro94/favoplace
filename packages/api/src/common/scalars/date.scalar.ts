@@ -6,12 +6,12 @@ import { format } from 'date-fns';
 export class DateScalar implements CustomScalar<string, Date> {
   description = 'Date custom scalar type';
 
-  parseValue(value: number): Date {
+  parseValue(value: string): Date {
     return new Date(value); // value from the client
   }
 
   serialize(value: Date): string {
-    return format(value, 'yyyy-MM-dd HH:ss:mm'); // value sent to the client
+    return format(value, 'yyyy-MM-dd HH:mm'); // value sent to the client
   }
 
   parseLiteral(ast: ValueNode): Date {

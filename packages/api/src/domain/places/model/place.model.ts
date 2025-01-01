@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql';
+import { VisitHistory } from '@api/domain/visit-histories/model/visit-history.model';
 
 @ObjectType({ description: 'place' })
 export class Place {
@@ -16,10 +17,4 @@ export class Place {
 
   @Field(() => [VisitHistory])
   visitHistories: VisitHistory[];
-}
-
-@ObjectType({ description: 'visitHistory' })
-class VisitHistory {
-  @Field()
-  date: string;
 }

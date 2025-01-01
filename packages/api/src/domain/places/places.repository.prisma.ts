@@ -35,6 +35,19 @@ export class PlacesRepository implements IPlacesRepository {
     });
   }
 
+  async updateVisitCount({
+    id,
+    visitCount,
+  }: {
+    id: string;
+    visitCount: number;
+  }) {
+    return await this.prisma.place.update({
+      where: { id },
+      data: { visitCount },
+    });
+  }
+
   async remove(id: string): Promise<boolean> {
     await this.prisma.place.delete({ where: { id } });
     return true;

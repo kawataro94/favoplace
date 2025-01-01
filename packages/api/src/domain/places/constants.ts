@@ -1,1 +1,1 @@
-export const repositoryToken = 'repository';
+export const placesRepositoryToken = 'places-repository';

@@ -2,20 +2,21 @@ import { Injectable, Inject } from '@nestjs/common';
 import { NewPlaceInput } from './dto/new-place.input';
 import { PlacesArgs } from './dto/places.args';
 import { IPlacesRepository } from './places.repository.interface';
-import { repositoryToken } from './constants';
+import { placesRepositoryToken } from './constants';
 
 type Place = {
   id: string;
   name: string;
   description: string;
   visitCount: number;
-  visitHistories: { date: string }[];
+  visitHistories: { id: string; placeId: string; date: string }[];
 };
 
 @Injectable()
 export class PlacesService {
   constructor(
-    @Inject(repositoryToken) private readonly repository: IPlacesRepository,
+    @Inject(placesRepositoryToken)
+    private readonly repository: IPlacesRepository,
   ) {}
 
   async findOneById(id: string): Promise<Place> {

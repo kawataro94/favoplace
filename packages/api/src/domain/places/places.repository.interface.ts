@@ -35,5 +35,11 @@ export interface IPlacesRepository {
     description: string;
     visitCount: number;
   }>;
+  updateVisitCount: ({ id, visitCount }) => Promise<{
+    id: string;
+    name: string;
+    description: string;
+    visitCount: number;
+  }>;
   remove: (id: string) => Promise<boolean>;
 }
