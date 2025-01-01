@@ -6,7 +6,7 @@ import { fallback, zodSearchValidator } from "@tanstack/router-zod-adapter";
 import { z } from "zod";
 import { PlaceTable } from "@web/components/feature/place/place-table";
 import { PlaceGallery } from "@web/components/feature/place/place-gallery";
-import { fetchPlaces } from "@web/lib/fetchPlaces";
+import { fetchPlaces } from "@web/lib/fetch-places";
 
 const searchSchema = z.object({
   view: fallback(z.enum(["list", "gallery"]), "gallery").default("gallery"),

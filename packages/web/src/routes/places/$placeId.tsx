@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Space, Title } from "@mantine/core";
 import { createFileRoute } from "@tanstack/react-router";
-import { fetchPlace } from "@web/lib/fetchPlace";
+import { fetchPlace } from "@web/lib/fetch-place";
 import { PlaceDetails } from "@web/components/feature/place/place-details";
 import { VisitHistoryTable } from "@web/components/feature/visit-history/visit-history-table";
 

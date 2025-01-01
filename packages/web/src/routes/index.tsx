@@ -1,7 +1,7 @@
 import { useEffect, useState, Fragment } from "react";
 import { SimpleGrid } from "@mantine/core";
 import { createFileRoute } from "@tanstack/react-router";
-import { fetchPlaces } from "@web/lib/fetchPlaces";
+import { fetchPlaces } from "@web/lib/fetch-places";
 import { PlaceCounter } from "@web/components/feature/place/place-counter";
 
 export const Route = createFileRoute("/")({

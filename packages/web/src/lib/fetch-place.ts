@@ -1,4 +1,4 @@
-import { gql, request } from "graphql-request";
+import { client } from "./graphql-client";
 
 export async function fetchPlace({ placeId }: { placeId: string }): Promise<{
   place: {
@@ -8,9 +8,10 @@ export async function fetchPlace({ placeId }: { placeId: string }): Promise<{
     visitHistories: { date: string }[];
   };
 }> {
-  const res = gql`
-    {
-      place(id: "${placeId}") {
+  const variables = { placeId };
+  const document = `
+    query ($placeId: String!) {
+      place(id: $placeId) {
         name
         description
         visitCount
@@ -21,5 +22,5 @@ export async function fetchPlace({ placeId }: { placeId: string }): Promise<{
     }
   `;
 
-  return await request("http://localhost:3000/graphql", res);
+  return await client.request({ document, variables });
 }

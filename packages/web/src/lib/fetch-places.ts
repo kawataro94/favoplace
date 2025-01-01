@@ -1,4 +1,4 @@
-import { gql, request } from "graphql-request";
+import { client } from "./graphql-client";
 
 export async function fetchPlaces(): Promise<{
   places: {
@@ -7,7 +7,7 @@ export async function fetchPlaces(): Promise<{
     visitCount: number;
   }[];
 }> {
-  const res = gql`
+  const document = `
     {
       places {
         id
@@ -16,5 +16,6 @@ export async function fetchPlaces(): Promise<{
       }
     }
   `;
-  return await request("http://localhost:3000/graphql", res);
+
+  return await client.request({ document });
 }
