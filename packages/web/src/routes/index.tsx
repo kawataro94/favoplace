@@ -27,12 +27,12 @@ function HomeComponent() {
   return (
     <SimpleGrid
       cols={{ base: 1, sm: 2, md: 4 }}
-      spacing={{ md: 20 }}
-      verticalSpacing={{ md: 20 }}
+      spacing={20}
+      verticalSpacing={20}
     >
-      {places.map(({ name, visitCount }) => (
+      {places.map(({ id, name, visitCount }) => (
         <Fragment key={name}>
-          <PlaceCounter name={name} visitCount={visitCount} />
+          <PlaceCounter id={id} name={name} visitCount={visitCount} />
         </Fragment>
       ))}
     </SimpleGrid>
