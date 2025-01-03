@@ -9,5 +9,5 @@ export class VisitHistory {
   placeId: string;
 
   @Field()
-  date: string;
+  date: Date;
 }

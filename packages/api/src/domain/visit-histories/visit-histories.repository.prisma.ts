@@ -18,7 +18,7 @@ export class VisitHistoriesRepository implements IVisitHistoriesRepository {
     date,
   }: {
     placeId: string;
-    date: string;
+    date: Date;
   }): Promise<VisitHistory> {
     return await this.prisma.visitHistory.create({
       data: {

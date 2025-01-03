@@ -7,7 +7,7 @@ import { visitHistoriesRepositoryToken } from './constants';
 
 type VisitHistory = {
   id: string;
-  date: string;
+  date: Date;
   placeId: string;
 };
 

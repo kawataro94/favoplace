@@ -8,7 +8,7 @@ directive @upper on FIELD_DEFINITION
 type VisitHistory {
   id: ID!
   placeId: ID!
-  date: String!
+  date: Date!
 }
 
 """place"""
@@ -19,6 +19,9 @@ type Place {
   visitCount: Float!
   visitHistories: [VisitHistory!]!
 }
+
+"""Date custom scalar type"""
+scalar Date
 
 type Query {
   place(id: String!): Place!
@@ -38,7 +41,7 @@ input NewPlaceInput {
 
 input NewVisitHistoryInput {
   placeId: String!
-  date: String!
+  date: Date!
 }
 
 type Subscription {

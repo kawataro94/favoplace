@@ -18,7 +18,7 @@ model Place {
 
 model VisitHistory {
   id       String  @id @default(cuid())
-  date     String
+  date     DateTime @db.Timestamptz()
   place    Place? @relation(fields: [placeId], references: [id])
   placeId  String?
 }

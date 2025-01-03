@@ -5,6 +5,6 @@ export interface IVisitHistoriesRepository {
     date,
   }: {
     placeId: string;
-    date: string;
-  }) => Promise<{ id: string; date: string; placeId: string }>;
+    date: Date;
+  }) => Promise<{ id: string; date: Date; placeId: string }>;
 }

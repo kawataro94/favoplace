@@ -9,7 +9,7 @@ export async function pushVisitHistory({
 }) {
   const variables = { placeId, date };
   const document = `
-      mutation ($placeId: String!, $date: String!) {
+      mutation ($placeId: String!, $date: Date!) {
         addVisitHistory (
           newVisitHistoryData: {
             placeId: $placeId

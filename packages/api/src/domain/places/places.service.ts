@@ -9,7 +9,7 @@ type Place = {
   name: string;
   description: string;
   visitCount: number;
-  visitHistories: { id: string; placeId: string; date: string }[];
+  visitHistories: { id: string; placeId: string; date: Date }[];
 };
 
 @Injectable()

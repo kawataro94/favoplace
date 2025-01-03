@@ -19,7 +19,8 @@
     "test:e2e": "echo 'No e2e tests implemented yet.'",
     "db:type-gen": "prisma generate",
     "db:migrate:dev": "prisma migrate dev",
-    "db:seed": "prisma db seed"
+    "db:seed": "prisma db seed",
+    "db:reset": "prisma migrate reset"
   },
   "dependencies": {
     "@apollo/server": "4.11.2",

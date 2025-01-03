@@ -6,5 +6,5 @@ export class NewVisitHistoryInput {
   placeId: string;
 
   @Field()
-  date: string;
+  date: Date;
 }

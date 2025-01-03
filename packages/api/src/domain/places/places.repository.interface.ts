@@ -6,7 +6,7 @@ export interface IPlacesRepository {
     visitCount: number;
     visitHistories: {
       id: string;
-      date: string;
+      date: Date;
       placeId: string;
     }[];
   }>;
@@ -18,7 +18,7 @@ export interface IPlacesRepository {
       visitCount: number;
       visitHistories: {
         id: string;
-        date: string;
+        date: Date;
         placeId: string;
       }[];
     }[]
