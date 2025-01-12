@@ -3,6 +3,9 @@ import { Max, Min } from 'class-validator';
 
 @ArgsType()
 export class PlacesArgs {
+  @Field()
+  userId: string;
+
   @Field((type) => Int)
   @Min(0)
   skip = 0;

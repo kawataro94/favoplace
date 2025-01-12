@@ -6,6 +6,9 @@ export class VisitHistory {
   id: string;
 
   @Field((type) => ID)
+  userId: string;
+
+  @Field((type) => ID)
   placeId: string;
 
   @Field()

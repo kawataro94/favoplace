@@ -7,6 +7,7 @@ directive @upper on FIELD_DEFINITION
 """visitHistory"""
 type VisitHistory {
   id: ID!
+  userId: ID!
   placeId: ID!
   date: Date!
 }
@@ -14,6 +15,7 @@ type VisitHistory {
 """place"""
 type Place {
   id: ID!
+  userId: ID!
   name: String!
   description: String
   visitCount: Float!
@@ -24,22 +26,24 @@ type Place {
 scalar Date
 
 type Query {
-  place(id: String!): Place!
-  places(skip: Int! = 0, take: Int! = 25): [Place!]!
+  place(id: String!, userId: String!): Place!
+  places(userId: String!, skip: Int! = 0, take: Int! = 25): [Place!]!
 }
 
 type Mutation {
   addPlace(newPlaceData: NewPlaceInput!): Place!
-  removePlace(id: String!): Boolean!
+  removePlace(id: String!, userId: String!): Boolean!
   addVisitHistory(newVisitHistoryData: NewVisitHistoryInput!): VisitHistory!
 }
 
 input NewPlaceInput {
+  userId: String!
   name: String!
   description: String = ""
 }
 
 input NewVisitHistoryInput {
+  userId: String!
   placeId: String!
   date: Date!
 }

@@ -6,6 +6,9 @@ export class Place {
   @Field((type) => ID)
   id: string;
 
+  @Field((type) => ID)
+  userId: string;
+
   @Field()
   name: string;
 

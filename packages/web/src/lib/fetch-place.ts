@@ -1,6 +1,12 @@
 import { client } from "./graphql-client";
 
-export async function fetchPlace({ placeId }: { placeId: string }): Promise<{
+export async function fetchPlace({
+  placeId,
+  userId,
+}: {
+  placeId: string;
+  userId: string;
+}): Promise<{
   place: {
     name: string;
     description: string;
@@ -8,10 +14,10 @@ export async function fetchPlace({ placeId }: { placeId: string }): Promise<{
     visitHistories: { date: string }[];
   };
 }> {
-  const variables = { placeId };
+  const variables = { placeId, userId };
   const document = `
-    query ($placeId: String!) {
-      place(id: $placeId) {
+    query ($placeId: String!, $userId: String!) {
+      place(id: $placeId, userId: $userId) {
         name
         description
         visitCount

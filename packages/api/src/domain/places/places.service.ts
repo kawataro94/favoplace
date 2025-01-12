@@ -6,10 +6,11 @@ import { placesRepositoryToken } from './constants';
 
 type Place = {
   id: string;
+  userId: string;
   name: string;
   description: string;
   visitCount: number;
-  visitHistories: { id: string; placeId: string; date: Date }[];
+  visitHistories: { id: string; userId: string; placeId: string; date: Date }[];
 };
 
 @Injectable()
@@ -19,8 +20,14 @@ export class PlacesService {
     private readonly repository: IPlacesRepository,
   ) {}
 
-  async findOneById(id: string): Promise<Place> {
-    return this.repository.findOneById(id);
+  async findOneById({
+    id,
+    userId,
+  }: {
+    id: string;
+    userId: string;
+  }): Promise<Place> {
+    return this.repository.findOneById({ id, userId });
   }
 
   async findAll(placesArgs: PlacesArgs): Promise<Place[]> {
@@ -28,13 +35,14 @@ export class PlacesService {
   }
 
   async create({
+    userId,
     name,
     description,
   }: NewPlaceInput): Promise<Omit<Place, 'visitHistories'>> {
-    return await this.repository.create({ name, description });
+    return await this.repository.create({ userId, name, description });
   }
 
-  async remove(id: string): Promise<boolean> {
-    return this.repository.remove(id);
+  async remove({ id, userId }): Promise<boolean> {
+    return this.repository.remove({ id, userId });
   }
 }

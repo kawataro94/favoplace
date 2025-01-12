@@ -8,11 +8,15 @@ import { IPlacesRepository } from './places.repository.interface';
 export class PlacesRepository implements IPlacesRepository {
   constructor(private readonly prisma: Prisma) {}
 
-  async findOneById(
-    id: string,
-  ): Promise<Place & { visitHistories: VisitHistory[] }> {
+  async findOneById({
+    id,
+    userId,
+  }: {
+    id: string;
+    userId: string;
+  }): Promise<Place & { visitHistories: VisitHistory[] }> {
     return this.prisma.place.findUnique({
-      where: { id },
+      where: { id, userId },
       include: { visitHistories: true },
     });
   }
@@ -21,13 +25,23 @@ export class PlacesRepository implements IPlacesRepository {
     placesArgs: PlacesArgs,
   ): Promise<(Place & { visitHistories: VisitHistory[] })[]> {
     return await this.prisma.place.findMany({
+      where: { userId: placesArgs.userId },
       include: { visitHistories: true },
     });
   }
 
-  async create({ name, description }: { name: string; description: string }) {
+  async create({
+    userId,
+    name,
+    description,
+  }: {
+    userId: string;
+    name: string;
+    description: string;
+  }) {
     return await this.prisma.place.create({
       data: {
+        userId,
         name,
         description,
         visitCount: 0,
@@ -37,19 +51,27 @@ export class PlacesRepository implements IPlacesRepository {
 
   async updateVisitCount({
     id,
+    userId,
     visitCount,
   }: {
     id: string;
+    userId: string;
     visitCount: number;
   }) {
     return await this.prisma.place.update({
-      where: { id },
+      where: { id, userId },
       data: { visitCount },
     });
   }
 
-  async remove(id: string): Promise<boolean> {
-    await this.prisma.place.delete({ where: { id } });
+  async remove({
+    id,
+    userId,
+  }: {
+    id: string;
+    userId: string;
+  }): Promise<boolean> {
+    await this.prisma.place.delete({ where: { id, userId } });
     return true;
   }
 }

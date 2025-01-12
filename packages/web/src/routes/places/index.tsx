@@ -8,6 +8,7 @@ import { z } from "zod";
 import { PlaceTable } from "@web/components/feature/place/place-table";
 import { PlaceGallery } from "@web/components/feature/place/place-gallery";
 import { fetchPlaces } from "@web/lib/fetch-places";
+import { useUserContext } from "@web/lib/user-context";
 
 const searchSchema = z.object({
   view: fallback(z.enum(["list", "gallery"]), "gallery").default("gallery"),
@@ -20,6 +21,7 @@ export const Route = createFileRoute("/places/")({
 
 function PlaceComponent() {
   const { view } = Route.useSearch();
+  const { userId } = useUserContext();
 
   const [places, setPlaces] = useState<
     {
@@ -30,11 +32,13 @@ function PlaceComponent() {
   >([]);
 
   useEffect(() => {
+    if (!userId) return;
+
     (async function () {
-      const { places: _places } = await fetchPlaces();
+      const { places: _places } = await fetchPlaces({ userId });
       setPlaces(_places);
     })();
-  }, []);
+  }, [userId]);
 
   return (
     <>

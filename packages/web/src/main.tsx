@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ClerkProvider } from "@clerk/clerk-react";
 import { MantineProvider } from "@mantine/core";
 import {
   RouterProvider,
@@ -30,6 +31,12 @@ declare module "@mantine/core" {
   interface ButtonProps extends LinkComponentProps {}
 }
 
+const CLERK_PUBLISHABLE_KEY = import.meta.env.PUBLIC_CLERK_PUBLISHABLE_KEY;
+
+if (!CLERK_PUBLISHABLE_KEY) {
+  throw new Error("Add your Clerk Publishable Key to the .env.local file");
+}
+
 const rootElement = document.getElementById("app")!;
 
 if (!rootElement.innerHTML) {
@@ -37,8 +44,13 @@ if (!rootElement.innerHTML) {
   root.render(
     <React.StrictMode>
       <MantineProvider>
-        <Notifications />
-        <RouterProvider router={router} />
+        <ClerkProvider
+          publishableKey={CLERK_PUBLISHABLE_KEY}
+          afterSignOutUrl="/"
+        >
+          <Notifications />
+          <RouterProvider router={router} />
+        </ClerkProvider>
       </MantineProvider>
     </React.StrictMode>
   );

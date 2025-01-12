@@ -1,19 +1,23 @@
 import { client } from "./graphql-client";
 
-export async function createPlace({
-  placeName,
-  description,
-}: {
-  placeName: string;
-  description: string;
-}): Promise<{
+export async function createPlace(
+  {
+    placeName,
+    description,
+  }: {
+    placeName: string;
+    description: string;
+  },
+  userId: string
+): Promise<{
   id: string;
 }> {
-  const variables = { placeName, description };
+  const variables = { placeName, description, userId };
   const document = `
-    mutation ($placeName: String!, $description: String!) {
+    mutation ($userId: String!, $placeName: String!, $description: String!) {
       addPlace(
         newPlaceData: {
+          userId: $userId
           name: $placeName
           description: $description
         }

@@ -3,12 +3,15 @@ import { SimpleGrid } from "@mantine/core";
 import { createFileRoute } from "@tanstack/react-router";
 import { fetchPlaces } from "@web/lib/fetch-places";
 import { PlaceCounter } from "@web/components/feature/place/place-counter";
+import { useUserContext } from "@web/lib/user-context";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
 });
 
 function HomeComponent() {
+  const { userId } = useUserContext();
+
   const [places, setPlaces] = useState<
     {
       id: string;
@@ -18,11 +21,13 @@ function HomeComponent() {
   >([]);
 
   useEffect(() => {
+    if (!userId) return;
+
     (async function () {
-      const { places: _places } = await fetchPlaces();
+      const { places: _places } = await fetchPlaces({ userId });
       setPlaces(_places);
     })();
-  }, []);
+  }, [userId]);
 
   return (
     <SimpleGrid

@@ -3,6 +3,7 @@ import { createFileRoute, useRouter } from "@tanstack/react-router";
 import { useForm } from "@mantine/form";
 import { useNotification } from "@web/components/ui/use-notification";
 import { createPlace } from "@web/lib/create-place";
+import { useUserContext } from "@web/lib/user-context";
 
 export const Route = createFileRoute("/places/new/")({
   component: RouteComponent,
@@ -11,6 +12,7 @@ export const Route = createFileRoute("/places/new/")({
 function RouteComponent() {
   const router = useRouter();
   const { notifySuccess, notifyFailure } = useNotification();
+  const { userId } = useUserContext();
 
   const form = useForm({
     mode: "uncontrolled",
@@ -28,7 +30,7 @@ function RouteComponent() {
     description: string;
   }) {
     try {
-      const { id } = await createPlace(place);
+      const { id } = await createPlace(place, userId);
 
       notifySuccess();
       router.navigate({ to: "/places/$placeId", params: { placeId: id } });

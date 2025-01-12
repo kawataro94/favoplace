@@ -2,6 +2,7 @@ import { Button } from "@mantine/core";
 import { useCounter, useDisclosure, useTimeout } from "@mantine/hooks";
 import { pushVisitHistory } from "@web/lib/push-visit-history";
 import { now } from "@web/lib/date";
+import { useUserContext } from "@web/lib/user-context";
 
 export function PlaceCounter({
   id,
@@ -14,8 +15,11 @@ export function PlaceCounter({
 }) {
   const [loading, { open, close }] = useDisclosure();
   const [count, { increment, decrement }] = useCounter(visitCount);
-  const { start, clear } = useTimeout(async () => {
+  const { userId } = useUserContext();
+
+  const { start, clear } = useTimeout(async ([userId]) => {
     await pushVisitHistory({
+      userId,
       placeId: id,
       date: now(),
     });
@@ -26,7 +30,7 @@ export function PlaceCounter({
   function countUp() {
     open();
     increment();
-    start();
+    start(userId);
   }
 
   function cancel() {

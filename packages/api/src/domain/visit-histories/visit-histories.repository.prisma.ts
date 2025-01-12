@@ -14,14 +14,17 @@ export class VisitHistoriesRepository implements IVisitHistoriesRepository {
   }
 
   async create({
+    userId,
     placeId,
     date,
   }: {
+    userId: string;
     placeId: string;
     date: Date;
   }): Promise<VisitHistory> {
     return await this.prisma.visitHistory.create({
       data: {
+        userId,
         placeId,
         date,
       },

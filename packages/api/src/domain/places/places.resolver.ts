@@ -13,8 +13,11 @@ export class PlacesResolver {
   constructor(private readonly placesService: PlacesService) {}
 
   @Query((returns) => Place)
-  async place(@Args('id') id: string): Promise<Place> {
-    const place = await this.placesService.findOneById(id);
+  async place(
+    @Args('id') id: string,
+    @Args('userId') userId: string,
+  ): Promise<Place> {
+    const place = await this.placesService.findOneById({ id, userId });
     if (!place) {
       throw new NotFoundException(id);
     }
@@ -36,8 +39,11 @@ export class PlacesResolver {
   }
 
   @Mutation((returns) => Boolean)
-  async removePlace(@Args('id') id: string): Promise<boolean> {
-    return this.placesService.remove(id);
+  async removePlace(
+    @Args('id') id: string,
+    @Args('userId') userId: string,
+  ): Promise<boolean> {
+    return this.placesService.remove({ id, userId });
   }
 
   @Subscription((returns) => Place)

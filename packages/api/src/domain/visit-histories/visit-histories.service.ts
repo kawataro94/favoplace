@@ -7,6 +7,7 @@ import { visitHistoriesRepositoryToken } from './constants';
 
 type VisitHistory = {
   id: string;
+  userId: string;
   date: Date;
   placeId: string;
 };
@@ -20,14 +21,23 @@ export class VisitHistoriesService {
     private readonly placesRepository: IPlacesRepository,
   ) {}
 
-  async create({ placeId, date }: NewVisitHistoryInput): Promise<VisitHistory> {
+  async create({
+    userId,
+    placeId,
+    date,
+  }: NewVisitHistoryInput): Promise<VisitHistory> {
     const visitHistory = await this.visitHistoriesRepository.create({
+      userId,
       placeId,
       date,
     });
 
     const visitCount = await this.visitHistoriesRepository.count({ placeId });
-    await this.placesRepository.updateVisitCount({ id: placeId, visitCount });
+    await this.placesRepository.updateVisitCount({
+      id: placeId,
+      userId,
+      visitCount,
+    });
 
     return visitHistory;
   }

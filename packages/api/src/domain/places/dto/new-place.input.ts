@@ -4,6 +4,9 @@ import { Length, MaxLength } from 'class-validator';
 @InputType()
 export class NewPlaceInput {
   @Field()
+  userId: string;
+
+  @Field()
   @MaxLength(30)
   name: string;
 

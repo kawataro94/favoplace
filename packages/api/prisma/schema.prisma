@@ -9,16 +9,20 @@ datasource db {
 }
 
 model Place {
-  id            String  @id @default(cuid())
-  name          String  @unique
-  description   String
-  visitCount    Int
-  visitHistories  VisitHistory[]
+  id          String @id @default(cuid())
+  userId      String
+  name        String
+  description String
+  visitCount  Int
+
+  visitHistories VisitHistory[]
 }
 
 model VisitHistory {
-  id       String  @id @default(cuid())
-  date     DateTime @db.Timestamptz()
-  place    Place? @relation(fields: [placeId], references: [id])
-  placeId  String?
+  id     String   @id @default(cuid())
+  userId String
+  date   DateTime @db.Timestamptz()
+
+  place   Place?  @relation(fields: [placeId], references: [id])
+  placeId String?
 }

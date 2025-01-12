@@ -1,17 +1,20 @@
 import { client } from "./graphql-client";
 
 export async function pushVisitHistory({
+  userId,
   placeId,
   date,
 }: {
+  userId: string;
   placeId: string;
   date: string;
 }) {
-  const variables = { placeId, date };
+  const variables = { userId, placeId, date };
   const document = `
-      mutation ($placeId: String!, $date: Date!) {
+      mutation ($userId: String!, $placeId: String!, $date: Date!) {
         addVisitHistory (
           newVisitHistoryData: {
+            userId: $userId
             placeId: $placeId
             date: $date
           }
