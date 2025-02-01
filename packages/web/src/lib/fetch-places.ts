@@ -1,4 +1,4 @@
-import { client } from "./graphql-client";
+import { client } from "./graphql-request";
 
 export async function fetchPlaces({ userId }: { userId: string }): Promise<{
   places: {

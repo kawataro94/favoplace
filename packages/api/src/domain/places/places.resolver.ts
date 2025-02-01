@@ -1,5 +1,6 @@
 import { NotFoundException } from '@nestjs/common';
 import { Args, Mutation, Query, Resolver, Subscription } from '@nestjs/graphql';
+import { GraphQLUpload, FileUpload } from 'graphql-upload-minimal';
 import { PubSub } from 'graphql-subscriptions';
 import { NewPlaceInput } from './dto/new-place.input';
 import { PlacesArgs } from './dto/places.args';
@@ -44,6 +45,25 @@ export class PlacesResolver {
     @Args('userId') userId: string,
   ): Promise<boolean> {
     return this.placesService.remove({ id, userId });
+  }
+
+  @Mutation((returns) => Boolean)
+  async uploadPlaceThumbnail(
+    @Args('id') id: string,
+    @Args('userId') userId: string,
+    @Args({ name: 'file', type: () => GraphQLUpload })
+    file: FileUpload,
+  ): Promise<boolean> {
+    const { filename, mimetype, createReadStream } = file;
+    return this.placesService.uploadThumbnail({
+      id,
+      userId,
+      file: {
+        filename,
+        mimetype,
+        createReadStream,
+      },
+    });
   }
 
   @Subscription((returns) => Place)

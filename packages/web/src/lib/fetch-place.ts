@@ -1,4 +1,4 @@
-import { client } from "./graphql-client";
+import { client } from "./graphql-request";
 
 export async function fetchPlace({
   placeId,

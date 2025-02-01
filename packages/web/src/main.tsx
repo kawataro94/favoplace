@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { Provider as UrqlProvider } from "urql";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { MantineProvider } from "@mantine/core";
 import {
@@ -9,6 +10,7 @@ import {
 } from "@tanstack/react-router";
 import { Notifications } from "@mantine/notifications";
 import { routeTree } from "./routeTree.gen";
+import { client } from "./lib/urql";
 
 import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
@@ -44,13 +46,15 @@ if (!rootElement.innerHTML) {
   root.render(
     <React.StrictMode>
       <MantineProvider>
-        <ClerkProvider
-          publishableKey={CLERK_PUBLISHABLE_KEY}
-          afterSignOutUrl="/"
-        >
-          <Notifications />
-          <RouterProvider router={router} />
-        </ClerkProvider>
+        <UrqlProvider value={client}>
+          <ClerkProvider
+            publishableKey={CLERK_PUBLISHABLE_KEY}
+            afterSignOutUrl="/"
+          >
+            <Notifications />
+            <RouterProvider router={router} />
+          </ClerkProvider>
+        </UrqlProvider>
       </MantineProvider>
     </React.StrictMode>
   );

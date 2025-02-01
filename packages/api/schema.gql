@@ -33,6 +33,7 @@ type Query {
 type Mutation {
   addPlace(newPlaceData: NewPlaceInput!): Place!
   removePlace(id: String!, userId: String!): Boolean!
+  uploadPlaceThumbnail(id: String!, userId: String!, file: Upload!): Boolean!
   addVisitHistory(newVisitHistoryData: NewVisitHistoryInput!): VisitHistory!
 }
 
@@ -41,6 +42,9 @@ input NewPlaceInput {
   name: String!
   description: String = ""
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input NewVisitHistoryInput {
   userId: String!

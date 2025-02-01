@@ -5,6 +5,7 @@ import { fetchPlace } from "@web/lib/fetch-place";
 import { removePlace } from "@web/lib/remove-place";
 import { useUserContext } from "@web/lib/user-context";
 import { PlaceDetails } from "@web/components/feature/place/place-details";
+import { PlaceUploader } from "@web/components/feature/place/place-uploader";
 import { VisitHistoryTable } from "@web/components/feature/visit-history/visit-history-table";
 import { useNotification } from "@web/components/ui/use-notification";
 
@@ -56,15 +57,15 @@ function RouteComponent() {
       <Title order={1}>{name}</Title>
       <Space h="sm" />
       <PlaceDetails description={description} visitCount={visitCount} />
+      <Space h="sm" />
+      <PlaceUploader.Thumbnail userId={userId} placeId={placeId} />
 
       <Space h="xl" />
 
       <Title order={2}>History</Title>
       <Space h="sm" />
       <VisitHistoryTable histories={visitHistories} />
-
       <Space h="xl" />
-
       <Button color="red" onClick={_removePlace}>
         削除
       </Button>
