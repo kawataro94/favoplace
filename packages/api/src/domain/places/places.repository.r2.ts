@@ -24,3 +24,27 @@ export async function uploadThumbnail({
 
   return true;
 }
+
+export async function uploadPhoto({
+  id,
+  userId,
+  file,
+}: {
+  id: string;
+  userId: string;
+  file: {
+    filename: string;
+    mimetype: string;
+    createReadStream: () => ReadStream;
+  };
+}): Promise<boolean> {
+  const upload = R2Upload({
+    stream: file.createReadStream(),
+    key: `${userId}/places/${id}/photos/${file.filename}`,
+    mimetype: file.mimetype,
+  });
+
+  await upload.done();
+
+  return true;
+}

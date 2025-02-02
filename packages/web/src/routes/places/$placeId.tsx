@@ -55,15 +55,17 @@ function RouteComponent() {
   return (
     <>
       <Title order={1}>{name}</Title>
-      <Space h="sm" />
+      <Space h="md" />
       <PlaceDetails description={description} visitCount={visitCount} />
-      <Space h="sm" />
+      <Space h="md" />
       <PlaceUploader.Thumbnail userId={userId} placeId={placeId} />
+      <Space h="md" />
+      <PlaceUploader.Photos userId={userId} placeId={placeId} />
 
       <Space h="xl" />
 
       <Title order={2}>History</Title>
-      <Space h="sm" />
+      <Space h="md" />
       <VisitHistoryTable histories={visitHistories} />
       <Space h="xl" />
       <Button color="red" onClick={_removePlace}>

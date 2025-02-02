@@ -3,7 +3,7 @@ import { Injectable, Inject } from '@nestjs/common';
 import { NewPlaceInput } from './dto/new-place.input';
 import { PlacesArgs } from './dto/places.args';
 import { IPlacesRepository } from './places.repository.interface';
-import { uploadThumbnail } from './places.repository.r2';
+import { uploadPhoto, uploadThumbnail } from './places.repository.r2';
 import { placesRepositoryToken } from './constants';
 
 type Place = {
@@ -62,5 +62,21 @@ export class PlacesService {
     };
   }): Promise<boolean> {
     return uploadThumbnail({ id, userId, file });
+  }
+
+  async uploadPhoto({
+    id,
+    userId,
+    file,
+  }: {
+    id: string;
+    userId: string;
+    file: {
+      filename: string;
+      mimetype: string;
+      createReadStream: () => ReadStream;
+    };
+  }): Promise<boolean> {
+    return uploadPhoto({ id, userId, file });
   }
 }

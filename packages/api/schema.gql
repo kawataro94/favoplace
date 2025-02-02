@@ -34,6 +34,7 @@ type Mutation {
   addPlace(newPlaceData: NewPlaceInput!): Place!
   removePlace(id: String!, userId: String!): Boolean!
   uploadPlaceThumbnail(id: String!, userId: String!, file: Upload!): Boolean!
+  uploadPlacePhoto(id: String!, userId: String!, file: Upload!): Boolean!
   addVisitHistory(newVisitHistoryData: NewVisitHistoryInput!): VisitHistory!
 }
 

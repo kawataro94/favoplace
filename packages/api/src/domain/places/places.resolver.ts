@@ -66,6 +66,25 @@ export class PlacesResolver {
     });
   }
 
+  @Mutation((returns) => Boolean)
+  async uploadPlacePhoto(
+    @Args('id') id: string,
+    @Args('userId') userId: string,
+    @Args({ name: 'file', type: () => GraphQLUpload })
+    file: FileUpload,
+  ): Promise<boolean> {
+    const { filename, mimetype, createReadStream } = file;
+    return this.placesService.uploadPhoto({
+      id,
+      userId,
+      file: {
+        filename,
+        mimetype,
+        createReadStream,
+      },
+    });
+  }
+
   @Subscription((returns) => Place)
   placeAdded() {
     return pubSub.asyncIterator('placeAdded');
