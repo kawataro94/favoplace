@@ -7,17 +7,17 @@ import { PlacePhoto } from './model/place-photo.model';
 export class PlacePhotosResolver {
   constructor(private readonly placePhotosService: PlacePhotosService) {}
 
-  @Mutation((returns) => Boolean)
+  @Mutation((returns) => PlacePhoto)
   async uploadPlacePhoto(
-    @Args('id') id: string,
     @Args('userId') userId: string,
+    @Args('placeId') placeId: string,
     @Args({ name: 'file', type: () => GraphQLUpload })
     file: FileUpload,
-  ): Promise<boolean> {
+  ): Promise<PlacePhoto> {
     const { filename, mimetype, createReadStream } = file;
-    return this.placePhotosService.upload({
-      id,
+    return this.placePhotosService.create({
       userId,
+      placeId,
       file: {
         filename,
         mimetype,

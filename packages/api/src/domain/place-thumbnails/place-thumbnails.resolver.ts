@@ -7,17 +7,17 @@ import { PlaceThumbnail } from './model/place-thumbnail.model';
 export class PlaceThumbnailResolver {
   constructor(private readonly placeThumbnailService: PlaceThumbnailService) {}
 
-  @Mutation((returns) => Boolean)
+  @Mutation((returns) => PlaceThumbnail)
   async uploadPlaceThumbnail(
-    @Args('id') id: string,
     @Args('userId') userId: string,
+    @Args('placeId') placeId: string,
     @Args({ name: 'file', type: () => GraphQLUpload })
     file: FileUpload,
-  ): Promise<boolean> {
+  ): Promise<PlaceThumbnail> {
     const { filename, mimetype, createReadStream } = file;
-    return this.placeThumbnailService.upload({
-      id,
+    return this.placeThumbnailService.create({
       userId,
+      placeId,
       file: {
         filename,
         mimetype,

@@ -2,25 +2,26 @@ import { ReadStream } from 'node:fs';
 import { R2Upload } from '@api/lib/r2';
 
 export async function upload({
-  id,
   userId,
+  placeId,
   file,
 }: {
-  id: string;
   userId: string;
+  placeId: string;
   file: {
     filename: string;
     mimetype: string;
     createReadStream: () => ReadStream;
   };
-}): Promise<boolean> {
+}): Promise<{ pathname: string }> {
+  const pathname = `${userId}/places/${placeId}/thumbnails/${file.filename}`;
   const upload = R2Upload({
     stream: file.createReadStream(),
-    key: `${userId}/places/${id}/thumbnails/${file.filename}`,
+    key: pathname,
     mimetype: file.mimetype,
   });
 
   await upload.done();
 
-  return true;
+  return { pathname };
 }

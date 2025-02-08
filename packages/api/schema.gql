@@ -47,8 +47,8 @@ type Query {
 }
 
 type Mutation {
-  uploadPlacePhoto(id: String!, userId: String!, file: Upload!): Boolean!
-  uploadPlaceThumbnail(id: String!, userId: String!, file: Upload!): Boolean!
+  uploadPlacePhoto(userId: String!, placeId: String!, file: Upload!): PlacePhoto!
+  uploadPlaceThumbnail(userId: String!, placeId: String!, file: Upload!): PlaceThumbnail!
   addPlace(newPlaceData: NewPlaceInput!): Place!
   removePlace(id: String!, userId: String!): Boolean!
   addVisitHistory(newVisitHistoryData: NewVisitHistoryInput!): VisitHistory!

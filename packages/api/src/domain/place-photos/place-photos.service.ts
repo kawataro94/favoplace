@@ -1,24 +1,33 @@
 import { ReadStream } from 'node:fs';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { upload } from './place-photos.repository.r2';
+import { placePhotosRepositoryToken } from './constants';
+import { IPlacePhotosRepository } from './place-photos.repository.interface';
+import { NewPlacePhotoInput } from './dto/new-place-photo.input';
 
 @Injectable()
 export class PlacePhotosService {
-  constructor() {}
+  constructor(
+    @Inject(placePhotosRepositoryToken)
+    private readonly repository: IPlacePhotosRepository,
+  ) {}
 
-  async upload({
-    id,
+  async create({
     userId,
+    placeId,
     file,
-  }: {
-    id: string;
-    userId: string;
+  }: NewPlacePhotoInput & {
     file: {
       filename: string;
       mimetype: string;
       createReadStream: () => ReadStream;
     };
-  }): Promise<boolean> {
-    return upload({ id, userId, file });
+  }): Promise<{
+    id: string;
+    placeId: string;
+    pathname: string;
+  }> {
+    const { pathname } = await upload({ placeId, userId, file });
+    return this.repository.create({ placeId: placeId, pathname });
   }
 }
