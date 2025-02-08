@@ -19,6 +19,7 @@ export function PlaceGallery({
     id: string;
     name: string;
     visitCount: number;
+    placeThumbnails: { pathname: string }[];
   }[];
 }) {
   return (
@@ -27,9 +28,14 @@ export function PlaceGallery({
       spacing={{ md: 20 }}
       verticalSpacing={{ md: 20 }}
     >
-      {places.map(({ id, name, visitCount }) => (
+      {places.map(({ id, name, visitCount, placeThumbnails }) => (
         <Fragment key={name}>
-          <ImageCard id={id} title={name} visitCount={visitCount} />
+          <ImageCard
+            id={id}
+            title={name}
+            visitCount={visitCount}
+            placeThumbnails={placeThumbnails}
+          />
         </Fragment>
       ))}
     </SimpleGrid>
@@ -40,24 +46,36 @@ function ImageCard({
   id,
   title,
   visitCount,
+  placeThumbnails,
 }: {
   id: string;
   title: string;
   visitCount: number;
+  placeThumbnails: { pathname: string }[];
 }) {
   const theme = useMantineTheme();
-
-  const hasImage = false;
+  const hasImage = !!placeThumbnails.length;
 
   return (
-    <Card p="lg" shadow="lg" {...stylex.props(styles.card)} radius="md">
-      <div
-        {...stylex.props(styles.image)}
-        style={{
-          backgroundImage: "url(./no-image.jpeg)",
-        }}
-      />
-      <div {...stylex.props(hasImage && styles.overlay)} />
+    <Card p="md" shadow="lg" {...stylex.props(styles.card)} radius="md">
+      {hasImage ? (
+        <>
+          <div
+            {...stylex.props(styles.image)}
+            style={{
+              backgroundImage: `url(${import.meta.env.PUBLIC_R2_URL}/${placeThumbnails[0].pathname})`,
+            }}
+          />
+          <div {...stylex.props(styles.overlay)} />
+        </>
+      ) : (
+        <div
+          {...stylex.props(styles.image)}
+          style={{
+            backgroundImage: `url(./no-image.jpeg)`,
+          }}
+        />
+      )}
 
       <Anchor
         component={Link}
@@ -67,13 +85,9 @@ function ImageCard({
         {...stylex.props(styles.content)}
       >
         <div>
-          <Text size="lg" {...stylex.props(styles.title)} fw={500}>
-            {title}
-          </Text>
-
           <Group justify="space-between" gap="xs">
             <Text size="sm" {...stylex.props(styles.category)}>
-              Cafe
+              {title}
             </Text>
 
             <Group gap="lg">
@@ -110,13 +124,13 @@ const styles = stylex.create({
   image: {
     position: "absolute",
     inset: 0,
-    backgroundSize: "contain",
+    backgroundSize: "cover",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",
   },
   overlay: {
     position: "absolute",
-    top: "20%",
+    top: "80%",
     left: 0,
     right: 0,
     bottom: 0,
@@ -132,7 +146,7 @@ const styles = stylex.create({
     zIndex: 1,
   },
   title: {
-    color: "var(--mantine-color-black)",
+    color: "var(--mantine-color-dark-2)",
     marginBottom: "5px",
   },
   bodyText: {

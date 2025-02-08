@@ -28,6 +28,7 @@ function PlaceComponent() {
       id: string;
       name: string;
       visitCount: number;
+      placeThumbnails: { pathname: string }[];
     }[]
   >([]);
 

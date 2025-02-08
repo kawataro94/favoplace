@@ -5,6 +5,7 @@ export async function fetchPlaces({ userId }: { userId: string }): Promise<{
     id: string;
     name: string;
     visitCount: number;
+    placeThumbnails: { pathname: string }[];
   }[];
 }> {
   const variables = { userId };
