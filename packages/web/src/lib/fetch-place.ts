@@ -12,6 +12,7 @@ export async function fetchPlace({
     description: string;
     visitCount: number;
     visitHistories: { date: string }[];
+    placePhotos: { pathname: string }[];
   };
 }> {
   const variables = { placeId, userId };
@@ -23,6 +24,9 @@ export async function fetchPlace({
         visitCount
         visitHistories {
           date
+        }
+        placePhotos {
+          pathname
         }
       }
     }

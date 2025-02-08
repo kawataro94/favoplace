@@ -5,9 +5,11 @@ import { fetchPlace } from "@web/lib/fetch-place";
 import { removePlace } from "@web/lib/remove-place";
 import { useUserContext } from "@web/lib/user-context";
 import { PlaceDetails } from "@web/components/feature/place/place-details";
-import { PlaceUploader } from "@web/components/feature/place/place-uploader";
 import { VisitHistoryTable } from "@web/components/feature/visit-history/visit-history-table";
+import { PlaceThumbnailUploader } from "@web/components/feature/place-thumbnail/place-thumbnail-uploader";
+import { PlacePhotoUploader } from "@web/components/feature/place-photo/place-photo-uploader";
 import { useNotification } from "@web/components/ui/use-notification";
+import { PlacePhotoGallery } from "@web/components/feature/place-photo/place-photo-gallery";
 
 export const Route = createFileRoute("/places/$placeId")({
   component: RouteComponent,
@@ -19,18 +21,24 @@ function RouteComponent() {
   const { notifySuccess, notifyFailure } = useNotification();
   const { userId } = useUserContext();
 
-  const [{ name, description, visitCount, visitHistories }, setPlace] =
-    useState<{
-      name: string;
-      description: string;
-      visitCount: number;
-      visitHistories: { date: string }[];
-    }>({
-      name: "",
-      description: "",
-      visitCount: 0,
-      visitHistories: [],
-    });
+  const [
+    { name, description, visitCount, visitHistories, placePhotos },
+    setPlace,
+  ] = useState<{
+    name: string;
+    description: string;
+    visitCount: number;
+    visitHistories: { date: string }[];
+    placePhotos: {
+      pathname: string;
+    }[];
+  }>({
+    name: "",
+    description: "",
+    visitCount: 0,
+    visitHistories: [],
+    placePhotos: [],
+  });
 
   useEffect(() => {
     if (!userId) return;
@@ -58,9 +66,11 @@ function RouteComponent() {
       <Space h="md" />
       <PlaceDetails description={description} visitCount={visitCount} />
       <Space h="md" />
-      <PlaceUploader.Thumbnail userId={userId} placeId={placeId} />
+      <PlaceThumbnailUploader userId={userId} placeId={placeId} />
       <Space h="md" />
-      <PlaceUploader.Photos userId={userId} placeId={placeId} />
+      <PlacePhotoUploader userId={userId} placeId={placeId} />
+      <Space h="md" />
+      <PlacePhotoGallery placePhotos={placePhotos} />
 
       <Space h="xl" />
 
