@@ -4,6 +4,20 @@
 
 directive @upper on FIELD_DEFINITION
 
+"""placePhoto"""
+type PlacePhoto {
+  id: ID!
+  placeId: ID!
+  pathname: String!
+}
+
+"""placeThumbnail"""
+type PlaceThumbnail {
+  id: ID!
+  placeId: ID!
+  pathname: String!
+}
+
 """visitHistory"""
 type VisitHistory {
   id: ID!
@@ -20,6 +34,8 @@ type Place {
   description: String
   visitCount: Float!
   visitHistories: [VisitHistory!]!
+  placeThumbnails: [PlaceThumbnail!]!
+  placePhotos: [PlacePhoto!]!
 }
 
 """Date custom scalar type"""
@@ -31,21 +47,21 @@ type Query {
 }
 
 type Mutation {
+  uploadPlacePhoto(id: String!, userId: String!, file: Upload!): Boolean!
+  uploadPlaceThumbnail(id: String!, userId: String!, file: Upload!): Boolean!
   addPlace(newPlaceData: NewPlaceInput!): Place!
   removePlace(id: String!, userId: String!): Boolean!
-  uploadPlaceThumbnail(id: String!, userId: String!, file: Upload!): Boolean!
-  uploadPlacePhoto(id: String!, userId: String!, file: Upload!): Boolean!
   addVisitHistory(newVisitHistoryData: NewVisitHistoryInput!): VisitHistory!
 }
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
 
 input NewPlaceInput {
   userId: String!
   name: String!
   description: String = ""
 }
-
-"""The `Upload` scalar type represents a file upload."""
-scalar Upload
 
 input NewVisitHistoryInput {
   userId: String!

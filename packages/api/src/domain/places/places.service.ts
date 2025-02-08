@@ -3,7 +3,6 @@ import { Injectable, Inject } from '@nestjs/common';
 import { NewPlaceInput } from './dto/new-place.input';
 import { PlacesArgs } from './dto/places.args';
 import { IPlacesRepository } from './places.repository.interface';
-import { uploadPhoto, uploadThumbnail } from './places.repository.r2';
 import { placesRepositoryToken } from './constants';
 
 type Place = {
@@ -13,6 +12,8 @@ type Place = {
   description: string;
   visitCount: number;
   visitHistories: { id: string; userId: string; placeId: string; date: Date }[];
+  placeThumbnails: { id: string; placeId: string; pathname: string }[];
+  placePhotos: { id: string; placeId: string; pathname: string }[];
 };
 
 @Injectable()
@@ -40,43 +41,13 @@ export class PlacesService {
     userId,
     name,
     description,
-  }: NewPlaceInput): Promise<Omit<Place, 'visitHistories'>> {
+  }: NewPlaceInput): Promise<
+    Omit<Place, 'visitHistories' | 'placeThumbnails' | 'placePhotos'>
+  > {
     return await this.repository.create({ userId, name, description });
   }
 
   async remove({ id, userId }): Promise<boolean> {
     return this.repository.remove({ id, userId });
-  }
-
-  async uploadThumbnail({
-    id,
-    userId,
-    file,
-  }: {
-    id: string;
-    userId: string;
-    file: {
-      filename: string;
-      mimetype: string;
-      createReadStream: () => ReadStream;
-    };
-  }): Promise<boolean> {
-    return uploadThumbnail({ id, userId, file });
-  }
-
-  async uploadPhoto({
-    id,
-    userId,
-    file,
-  }: {
-    id: string;
-    userId: string;
-    file: {
-      filename: string;
-      mimetype: string;
-      createReadStream: () => ReadStream;
-    };
-  }): Promise<boolean> {
-    return uploadPhoto({ id, userId, file });
   }
 }

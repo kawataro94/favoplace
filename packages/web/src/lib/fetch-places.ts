@@ -14,6 +14,9 @@ export async function fetchPlaces({ userId }: { userId: string }): Promise<{
         id
         name
         visitCount
+        placeThumbnails {
+          pathname
+        }
       }
     }
   `;

@@ -11,6 +11,16 @@ export interface IPlacesRepository {
       date: Date;
       placeId: string;
     }[];
+    placeThumbnails: {
+      id: string;
+      pathname: string;
+      placeId: string;
+    }[];
+    placePhotos: {
+      id: string;
+      pathname: string;
+      placeId: string;
+    }[];
   }>;
   findAll: ({
     userId,
@@ -31,6 +41,16 @@ export interface IPlacesRepository {
         id: string;
         userId: string;
         date: Date;
+        placeId: string;
+      }[];
+      placeThumbnails: {
+        id: string;
+        pathname: string;
+        placeId: string;
+      }[];
+      placePhotos: {
+        id: string;
+        pathname: string;
         placeId: string;
       }[];
     }[]

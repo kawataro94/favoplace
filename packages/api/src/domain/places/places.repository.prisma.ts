@@ -1,5 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { Place, VisitHistory } from '@prisma/client';
+import {
+  Place,
+  VisitHistory,
+  PlaceThumbnail,
+  PlacePhoto,
+} from '@prisma/client';
 import { Prisma } from '@api/lib/prisma';
 import { PlacesArgs } from './dto/places.args';
 import { IPlacesRepository } from './places.repository.interface';
@@ -8,25 +13,37 @@ import { IPlacesRepository } from './places.repository.interface';
 export class PlacesRepository implements IPlacesRepository {
   constructor(private readonly prisma: Prisma) {}
 
-  async findOneById({
-    id,
-    userId,
-  }: {
-    id: string;
-    userId: string;
-  }): Promise<Place & { visitHistories: VisitHistory[] }> {
+  async findOneById({ id, userId }: { id: string; userId: string }): Promise<
+    Place & {
+      visitHistories: VisitHistory[];
+      placeThumbnails: PlaceThumbnail[];
+      placePhotos: PlacePhoto[];
+    }
+  > {
     return this.prisma.place.findUnique({
       where: { id, userId },
-      include: { visitHistories: true },
+      include: {
+        visitHistories: true,
+        placeThumbnails: true,
+        placePhotos: true,
+      },
     });
   }
 
-  async findAll(
-    placesArgs: PlacesArgs,
-  ): Promise<(Place & { visitHistories: VisitHistory[] })[]> {
+  async findAll(placesArgs: PlacesArgs): Promise<
+    (Place & {
+      visitHistories: VisitHistory[];
+      placeThumbnails: PlaceThumbnail[];
+      placePhotos: PlacePhoto[];
+    })[]
+  > {
     return await this.prisma.place.findMany({
       where: { userId: placesArgs.userId },
-      include: { visitHistories: true },
+      include: {
+        visitHistories: true,
+        placeThumbnails: true,
+        placePhotos: true,
+      },
     });
   }
 
