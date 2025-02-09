@@ -15,6 +15,7 @@ import { Route as IndexImport } from './routes/index'
 import { Route as PlacesIndexImport } from './routes/places/index'
 import { Route as PlacesPlaceIdImport } from './routes/places/$placeId'
 import { Route as PlacesNewIndexImport } from './routes/places/new/index'
+import { Route as PlacesPlaceIdPhotosImport } from './routes/places_/$placeId/photos'
 
 // Create/Update Routes
 
@@ -39,6 +40,12 @@ const PlacesPlaceIdRoute = PlacesPlaceIdImport.update({
 const PlacesNewIndexRoute = PlacesNewIndexImport.update({
   id: '/places/new/',
   path: '/places/new/',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PlacesPlaceIdPhotosRoute = PlacesPlaceIdPhotosImport.update({
+  id: '/places_/$placeId/photos',
+  path: '/places/$placeId/photos',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -67,6 +74,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PlacesIndexImport
       parentRoute: typeof rootRoute
     }
+    '/places_/$placeId/photos': {
+      id: '/places_/$placeId/photos'
+      path: '/places/$placeId/photos'
+      fullPath: '/places/$placeId/photos'
+      preLoaderRoute: typeof PlacesPlaceIdPhotosImport
+      parentRoute: typeof rootRoute
+    }
     '/places/new/': {
       id: '/places/new/'
       path: '/places/new'
@@ -83,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/places/$placeId': typeof PlacesPlaceIdRoute
   '/places': typeof PlacesIndexRoute
+  '/places/$placeId/photos': typeof PlacesPlaceIdPhotosRoute
   '/places/new': typeof PlacesNewIndexRoute
 }
 
@@ -90,6 +105,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/places/$placeId': typeof PlacesPlaceIdRoute
   '/places': typeof PlacesIndexRoute
+  '/places/$placeId/photos': typeof PlacesPlaceIdPhotosRoute
   '/places/new': typeof PlacesNewIndexRoute
 }
 
@@ -98,15 +114,32 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/places/$placeId': typeof PlacesPlaceIdRoute
   '/places/': typeof PlacesIndexRoute
+  '/places_/$placeId/photos': typeof PlacesPlaceIdPhotosRoute
   '/places/new/': typeof PlacesNewIndexRoute
 }
 
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/places/$placeId' | '/places' | '/places/new'
+  fullPaths:
+    | '/'
+    | '/places/$placeId'
+    | '/places'
+    | '/places/$placeId/photos'
+    | '/places/new'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/places/$placeId' | '/places' | '/places/new'
-  id: '__root__' | '/' | '/places/$placeId' | '/places/' | '/places/new/'
+  to:
+    | '/'
+    | '/places/$placeId'
+    | '/places'
+    | '/places/$placeId/photos'
+    | '/places/new'
+  id:
+    | '__root__'
+    | '/'
+    | '/places/$placeId'
+    | '/places/'
+    | '/places_/$placeId/photos'
+    | '/places/new/'
   fileRoutesById: FileRoutesById
 }
 
@@ -114,6 +147,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   PlacesPlaceIdRoute: typeof PlacesPlaceIdRoute
   PlacesIndexRoute: typeof PlacesIndexRoute
+  PlacesPlaceIdPhotosRoute: typeof PlacesPlaceIdPhotosRoute
   PlacesNewIndexRoute: typeof PlacesNewIndexRoute
 }
 
@@ -121,6 +155,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   PlacesPlaceIdRoute: PlacesPlaceIdRoute,
   PlacesIndexRoute: PlacesIndexRoute,
+  PlacesPlaceIdPhotosRoute: PlacesPlaceIdPhotosRoute,
   PlacesNewIndexRoute: PlacesNewIndexRoute,
 }
 
@@ -137,6 +172,7 @@ export const routeTree = rootRoute
         "/",
         "/places/$placeId",
         "/places/",
+        "/places_/$placeId/photos",
         "/places/new/"
       ]
     },
@@ -148,6 +184,9 @@ export const routeTree = rootRoute
     },
     "/places/": {
       "filePath": "places/index.tsx"
+    },
+    "/places_/$placeId/photos": {
+      "filePath": "places_/$placeId/photos.tsx"
     },
     "/places/new/": {
       "filePath": "places/new/index.tsx"

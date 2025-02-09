@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { Button, Space, Title } from "@mantine/core";
-import { useRouter, createFileRoute } from "@tanstack/react-router";
+import { Anchor, Button, Space, Title } from "@mantine/core";
+import { useRouter, createFileRoute, Link } from "@tanstack/react-router";
 import { fetchPlace } from "@web/lib/fetch-place";
 import { removePlace } from "@web/lib/remove-place";
 import { useUserContext } from "@web/lib/user-context";
@@ -9,7 +9,6 @@ import { VisitHistoryTable } from "@web/components/feature/visit-history/visit-h
 import { PlaceThumbnailUploader } from "@web/components/feature/place-thumbnail/place-thumbnail-uploader";
 import { PlacePhotoUploader } from "@web/components/feature/place-photo/place-photo-uploader";
 import { useNotification } from "@web/components/ui/use-notification";
-import { PlacePhotoGallery } from "@web/components/feature/place-photo/place-photo-gallery";
 
 export const Route = createFileRoute("/places/$placeId")({
   component: RouteComponent,
@@ -21,24 +20,18 @@ function RouteComponent() {
   const { notifySuccess, notifyFailure } = useNotification();
   const { userId } = useUserContext();
 
-  const [
-    { name, description, visitCount, visitHistories, placePhotos },
-    setPlace,
-  ] = useState<{
-    name: string;
-    description: string;
-    visitCount: number;
-    visitHistories: { date: string }[];
-    placePhotos: {
-      pathname: string;
-    }[];
-  }>({
-    name: "",
-    description: "",
-    visitCount: 0,
-    visitHistories: [],
-    placePhotos: [],
-  });
+  const [{ name, description, visitCount, visitHistories }, setPlace] =
+    useState<{
+      name: string;
+      description: string;
+      visitCount: number;
+      visitHistories: { date: string }[];
+    }>({
+      name: "",
+      description: "",
+      visitCount: 0,
+      visitHistories: [],
+    });
 
   useEffect(() => {
     if (!userId) return;
@@ -69,8 +62,14 @@ function RouteComponent() {
       <PlaceThumbnailUploader userId={userId} placeId={placeId} />
       <Space h="md" />
       <PlacePhotoUploader userId={userId} placeId={placeId} />
-      <Space h="md" />
-      <PlacePhotoGallery placePhotos={placePhotos} />
+      <Space h="xs" />
+      <Anchor
+        component={Link}
+        to="/places/$placeId/photos"
+        params={{ placeId }}
+      >
+        All Photos
+      </Anchor>
 
       <Space h="xl" />
 
