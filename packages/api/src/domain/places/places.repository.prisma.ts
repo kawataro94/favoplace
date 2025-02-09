@@ -39,6 +39,7 @@ export class PlacesRepository implements IPlacesRepository {
   > {
     return await this.prisma.place.findMany({
       where: { userId: placesArgs.userId },
+      orderBy: [{ visitCount: 'desc' }],
       include: {
         visitHistories: true,
         placeThumbnails: true,
