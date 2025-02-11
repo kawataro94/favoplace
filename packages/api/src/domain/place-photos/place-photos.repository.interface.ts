@@ -5,5 +5,10 @@ export interface IPlacePhotosRepository {
   }: {
     placeId: string;
     pathname: string;
-  }) => Promise<{ id: string; placeId: string; pathname: string }>;
+  }) => Promise<{
+    id: string;
+    placeId: string;
+    pathname: string;
+    isFavorite: boolean;
+  }>;
 }

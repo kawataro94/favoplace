@@ -11,6 +11,7 @@ export class PlacePhotosRepository implements IPlacePhotosRepository {
       data: {
         placeId,
         pathname,
+        isFavorite: false,
       },
     });
   }

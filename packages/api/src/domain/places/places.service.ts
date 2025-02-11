@@ -1,4 +1,3 @@
-import { ReadStream } from 'node:fs';
 import { Injectable, Inject } from '@nestjs/common';
 import { NewPlaceInput } from './dto/new-place.input';
 import { PlacesArgs } from './dto/places.args';
@@ -13,7 +12,12 @@ type Place = {
   visitCount: number;
   visitHistories: { id: string; userId: string; placeId: string; date: Date }[];
   placeThumbnails: { id: string; placeId: string; pathname: string }[];
-  placePhotos: { id: string; placeId: string; pathname: string }[];
+  placePhotos: {
+    id: string;
+    placeId: string;
+    pathname: string;
+    isFavorite: boolean;
+  }[];
 };
 
 @Injectable()

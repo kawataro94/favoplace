@@ -10,4 +10,7 @@ export class PlacePhoto {
 
   @Field()
   pathname: string;
+
+  @Field()
+  isFavorite: boolean;
 }

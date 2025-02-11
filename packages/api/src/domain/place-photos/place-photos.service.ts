@@ -26,6 +26,7 @@ export class PlacePhotosService {
     id: string;
     placeId: string;
     pathname: string;
+    isFavorite: boolean;
   }> {
     const { pathname } = await upload({ placeId, userId, file });
     return this.repository.create({ placeId: placeId, pathname });

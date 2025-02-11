@@ -20,6 +20,7 @@ export interface IPlacesRepository {
       id: string;
       pathname: string;
       placeId: string;
+      isFavorite: boolean;
     }[];
   }>;
   findAll: ({
@@ -52,6 +53,7 @@ export interface IPlacesRepository {
         id: string;
         pathname: string;
         placeId: string;
+        isFavorite: boolean;
       }[];
     }[]
   >;
