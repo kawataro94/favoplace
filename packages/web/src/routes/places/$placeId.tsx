@@ -31,6 +31,7 @@ function RouteComponent() {
     visitHistories: { date: string }[];
     placePhotos: {
       pathname: string;
+      isFavorite: boolean;
     }[];
   }>({
     name: "",

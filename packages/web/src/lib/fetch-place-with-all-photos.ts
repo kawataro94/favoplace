@@ -11,6 +11,7 @@ export async function fetchPlaceWithAllPhotos({
     name: string;
     placePhotos: {
       pathname: string;
+      isFavorite: boolean;
     }[];
   };
 }> {
@@ -21,6 +22,7 @@ export async function fetchPlaceWithAllPhotos({
         name
         placePhotos {
           pathname
+          isFavorite
         }
       }
     }

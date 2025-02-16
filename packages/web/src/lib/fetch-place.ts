@@ -12,7 +12,7 @@ export async function fetchPlace({
     description: string;
     visitCount: number;
     visitHistories: { date: string }[];
-    placePhotos: { pathname: string }[];
+    placePhotos: { pathname: string; isFavorite: boolean }[];
   };
 }> {
   const variables = { placeId, userId, isFavoritePhotoOnly: true };
@@ -27,6 +27,7 @@ export async function fetchPlace({
         }
         placePhotos {
           pathname
+          isFavorite
         }
       }
     }
