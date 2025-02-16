@@ -1,32 +1,14 @@
-import { client } from "./graphql-request";
+import { gql } from "urql";
 
-export async function fetchPlaceWithAllPhotos({
-  placeId,
-  userId,
-}: {
-  placeId: string;
-  userId: string;
-}): Promise<{
-  place: {
-    name: string;
-    placePhotos: {
-      pathname: string;
-      isFavorite: boolean;
-    }[];
-  };
-}> {
-  const variables = { placeId, userId };
-  const document = `
-    query ($placeId: String!, $userId: String!) {
-      place(id: $placeId, userId: $userId) {
-        name
-        placePhotos {
-          pathname
-          isFavorite
-        }
+export const FETCH_PLACE_WITH_ALL_PHOTOS = gql`
+  query ($placeId: String!, $userId: String!) {
+    place(id: $placeId, userId: $userId) {
+      name
+      placePhotos {
+        id
+        pathname
+        isFavorite
       }
     }
-  `;
-
-  return await client.request({ document, variables });
-}
+  }
+`;

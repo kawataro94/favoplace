@@ -48,6 +48,7 @@ type Query {
 }
 
 type Mutation {
+  updatePlacePhotoFavorite(placePhotoId: String!, isFavorite: Boolean!): PlacePhoto!
   uploadPlacePhoto(userId: String!, placeId: String!, file: Upload!): PlacePhoto!
   uploadPlaceThumbnail(userId: String!, placeId: String!, file: Upload!): PlaceThumbnail!
   addPlace(newPlaceData: NewPlaceInput!): Place!

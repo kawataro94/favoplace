@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useMutation, useQuery } from "urql";
 import { Anchor, Button, Space, Title } from "@mantine/core";
 import { useRouter, createFileRoute, Link } from "@tanstack/react-router";
-import { fetchPlace } from "@web/lib/fetch-place";
+import { FETCH_PLACE } from "@web/lib/fetch-place";
 import { removePlace } from "@web/lib/remove-place";
 import { useUserContext } from "@web/lib/user-context";
+import { UPDATE_PLACE_PHOTO_FAVORITE } from "@web/lib/update-place-photo-favorite";
 import { PlaceDetails } from "@web/components/feature/place/place-details";
 import { VisitHistoryTable } from "@web/components/feature/visit-history/visit-history-table";
 import { PlaceThumbnailUploader } from "@web/components/feature/place-thumbnail/place-thumbnail-uploader";
@@ -20,35 +21,23 @@ function RouteComponent() {
   const router = useRouter();
   const { notifySuccess, notifyFailure } = useNotification();
   const { userId } = useUserContext();
-
-  const [
-    { name, description, visitCount, visitHistories, placePhotos },
-    setPlace,
-  ] = useState<{
-    name: string;
-    description: string;
-    visitCount: number;
-    visitHistories: { date: string }[];
-    placePhotos: {
-      pathname: string;
-      isFavorite: boolean;
-    }[];
+  const [_, updateFavoritePhoto] = useMutation(UPDATE_PLACE_PHOTO_FAVORITE);
+  const [{ data }, reExecuteQuery] = useQuery<{
+    place: {
+      name: string;
+      description: string;
+      visitCount: number;
+      visitHistories: { date: string }[];
+      placePhotos: {
+        id: string;
+        pathname: string;
+        isFavorite: boolean;
+      }[];
+    };
   }>({
-    name: "",
-    description: "",
-    visitCount: 0,
-    visitHistories: [],
-    placePhotos: [],
+    query: FETCH_PLACE,
+    variables: { placeId, userId, isFavoritePhotoOnly: true },
   });
-
-  useEffect(() => {
-    if (!userId) return;
-
-    (async function () {
-      const { place: _place } = await fetchPlace({ placeId, userId });
-      setPlace(_place);
-    })();
-  }, [userId]);
 
   async function _removePlace() {
     try {
@@ -61,11 +50,27 @@ function RouteComponent() {
     }
   }
 
+  async function handleFavoritePhotoUpdate(
+    placePhotoId: string,
+    isFavorite: boolean
+  ) {
+    try {
+      await updateFavoritePhoto({ placePhotoId, isFavorite });
+    } catch (e) {
+      notifyFailure();
+    } finally {
+      reExecuteQuery();
+    }
+  }
+
   return (
     <>
-      <Title order={1}>{name}</Title>
+      <Title order={1}>{data?.place.name}</Title>
       <Space h="md" />
-      <PlaceDetails description={description} visitCount={visitCount} />
+      <PlaceDetails
+        description={data?.place.description ?? ""}
+        visitCount={data?.place.visitCount ?? 0}
+      />
       <Space h="md" />
       <PlaceThumbnailUploader userId={userId} placeId={placeId} />
       <Space h="md" />
@@ -83,13 +88,16 @@ function RouteComponent() {
 
       <Title order={2}>Favorite Photos</Title>
       <Space h="md" />
-      <PlacePhotoGallery placePhotos={placePhotos} />
+      <PlacePhotoGallery
+        placePhotos={data?.place.placePhotos ?? []}
+        handleFavoritePhotoUpdate={handleFavoritePhotoUpdate}
+      />
 
       <Space h="xl" />
 
       <Title order={2}>History</Title>
       <Space h="md" />
-      <VisitHistoryTable histories={visitHistories} />
+      <VisitHistoryTable histories={data?.place.visitHistories ?? []} />
 
       <Space h="xl" />
 

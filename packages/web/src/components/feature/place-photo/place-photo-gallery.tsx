@@ -5,8 +5,17 @@ import { ImageCard } from "@web/components/ui/image-card";
 
 export function PlacePhotoGallery({
   placePhotos,
+  handleFavoritePhotoUpdate,
 }: {
-  placePhotos: { pathname: string; isFavorite: boolean }[];
+  placePhotos: {
+    id: string;
+    pathname: string;
+    isFavorite: boolean;
+  }[];
+  handleFavoritePhotoUpdate: (
+    placePhotoId: string,
+    isFavorite: boolean
+  ) => Promise<void>;
 }) {
   const theme = useMantineTheme();
 
@@ -16,7 +25,7 @@ export function PlacePhotoGallery({
       spacing={{ md: 20 }}
       verticalSpacing={{ md: 20 }}
     >
-      {placePhotos.map(({ pathname, isFavorite }) => (
+      {placePhotos.map(({ id, pathname, isFavorite }) => (
         <Fragment key={pathname}>
           <ImageCard.Default pathname={pathname}>
             <Group justify="space-between" gap="xs" p="10px">
@@ -36,6 +45,7 @@ export function PlacePhotoGallery({
                   fill: isFavorite ? theme.colors.pink[6] : "#fff",
                 }}
                 cursor="pointer"
+                onClick={() => handleFavoritePhotoUpdate(id, !isFavorite)}
               />
             </Group>
           </ImageCard.Default>

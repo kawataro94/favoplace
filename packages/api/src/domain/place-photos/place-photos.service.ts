@@ -12,6 +12,21 @@ export class PlacePhotosService {
     private readonly repository: IPlacePhotosRepository,
   ) {}
 
+  async updateFavorite({
+    placePhotoId,
+    isFavorite,
+  }: {
+    placePhotoId: string;
+    isFavorite: boolean;
+  }): Promise<{
+    id: string;
+    placeId: string;
+    pathname: string;
+    isFavorite: boolean;
+  }> {
+    return this.repository.update({ placePhotoId, isFavorite });
+  }
+
   async create({
     userId,
     placeId,
@@ -29,6 +44,6 @@ export class PlacePhotosService {
     isFavorite: boolean;
   }> {
     const { pathname } = await upload({ placeId, userId, file });
-    return this.repository.create({ placeId: placeId, pathname });
+    return this.repository.create({ placeId, pathname });
   }
 }

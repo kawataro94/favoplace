@@ -8,6 +8,17 @@ export class PlacePhotosResolver {
   constructor(private readonly placePhotosService: PlacePhotosService) {}
 
   @Mutation((returns) => PlacePhoto)
+  async updatePlacePhotoFavorite(
+    @Args('placePhotoId') placePhotoId: string,
+    @Args('isFavorite') isFavorite: boolean,
+  ): Promise<PlacePhoto> {
+    return this.placePhotosService.updateFavorite({
+      placePhotoId,
+      isFavorite,
+    });
+  }
+
+  @Mutation((returns) => PlacePhoto)
   async uploadPlacePhoto(
     @Args('userId') userId: string,
     @Args('placeId') placeId: string,
