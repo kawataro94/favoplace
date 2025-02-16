@@ -30,11 +30,13 @@ export class PlacesService {
   async findOneById({
     id,
     userId,
+    isFavoritePhotoOnly,
   }: {
     id: string;
     userId: string;
+    isFavoritePhotoOnly?: boolean;
   }): Promise<Place> {
-    return this.repository.findOneById({ id, userId });
+    return this.repository.findOneById({ id, userId, isFavoritePhotoOnly });
   }
 
   async findAll(placesArgs: PlacesArgs): Promise<Place[]> {

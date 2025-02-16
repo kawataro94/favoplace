@@ -12,17 +12,21 @@ export async function fetchPlace({
     description: string;
     visitCount: number;
     visitHistories: { date: string }[];
+    placePhotos: { pathname: string }[];
   };
 }> {
-  const variables = { placeId, userId };
+  const variables = { placeId, userId, isFavoritePhotoOnly: true };
   const document = `
-    query ($placeId: String!, $userId: String!) {
-      place(id: $placeId, userId: $userId) {
+    query ($placeId: String!, $userId: String!, $isFavoritePhotoOnly: Boolean!) {
+      place(id: $placeId, userId: $userId, isFavoritePhotoOnly: $isFavoritePhotoOnly) {
         name
         description
         visitCount
         visitHistories {
           date
+        }
+        placePhotos {
+          pathname
         }
       }
     }

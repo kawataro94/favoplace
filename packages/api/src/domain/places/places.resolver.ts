@@ -16,8 +16,14 @@ export class PlacesResolver {
   async place(
     @Args('id') id: string,
     @Args('userId') userId: string,
+    @Args('isFavoritePhotoOnly', { nullable: true })
+    isFavoritePhotoOnly?: boolean,
   ): Promise<Place> {
-    const place = await this.placesService.findOneById({ id, userId });
+    const place = await this.placesService.findOneById({
+      id,
+      userId,
+      isFavoritePhotoOnly,
+    });
     if (!place) {
       throw new NotFoundException(id);
     }

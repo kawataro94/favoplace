@@ -1,5 +1,13 @@
 export interface IPlacesRepository {
-  findOneById: ({ id, userId }: { id: string; userId: string }) => Promise<{
+  findOneById: ({
+    id,
+    userId,
+    isFavoritePhotoOnly,
+  }: {
+    id: string;
+    userId: string;
+    isFavoritePhotoOnly: boolean;
+  }) => Promise<{
     id: string;
     userId: string;
     name: string;

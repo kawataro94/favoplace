@@ -13,7 +13,15 @@ import { IPlacesRepository } from './places.repository.interface';
 export class PlacesRepository implements IPlacesRepository {
   constructor(private readonly prisma: Prisma) {}
 
-  async findOneById({ id, userId }: { id: string; userId: string }): Promise<
+  async findOneById({
+    id,
+    userId,
+    isFavoritePhotoOnly,
+  }: {
+    id: string;
+    userId: string;
+    isFavoritePhotoOnly?: boolean;
+  }): Promise<
     Place & {
       visitHistories: VisitHistory[];
       placeThumbnails: PlaceThumbnail[];
@@ -25,7 +33,12 @@ export class PlacesRepository implements IPlacesRepository {
       include: {
         visitHistories: true,
         placeThumbnails: true,
-        placePhotos: true,
+        placePhotos: {
+          where: {
+            isFavorite: isFavoritePhotoOnly,
+          },
+          orderBy: [{ id: 'desc' }],
+        },
       },
     });
   }

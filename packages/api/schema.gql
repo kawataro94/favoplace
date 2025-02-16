@@ -9,6 +9,7 @@ type PlacePhoto {
   id: ID!
   placeId: ID!
   pathname: String!
+  isFavorite: Boolean!
 }
 
 """placeThumbnail"""
@@ -42,7 +43,7 @@ type Place {
 scalar Date
 
 type Query {
-  place(id: String!, userId: String!): Place!
+  place(id: String!, userId: String!, isFavoritePhotoOnly: Boolean): Place!
   places(userId: String!, skip: Int! = 0, take: Int! = 25): [Place!]!
 }
 
