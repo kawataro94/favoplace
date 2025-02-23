@@ -1,11 +1,20 @@
 {
   "name": "favoplace",
   "version": "1.0.0",
+  "packageManager": "npm@10.8.2",
   "workspaces": [
     "packages/web",
     "packages/api"
   ],
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "start": "turbo start --filter=api"
+  },
   "dependencies": {
     "date-fns": "^4.1.0"
+  },
+  "devDependencies": {
+    "turbo": "^2.4.2"
   }
 }

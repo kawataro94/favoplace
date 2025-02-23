@@ -23,7 +23,7 @@ export function R2Upload({
   return new Upload({
     client,
     params: {
-      Bucket: `favoplace`,
+      Bucket: process.env.R2_BUCKET_NAME,
       Body: stream,
       Key: key,
       ContentType: mimetype,
