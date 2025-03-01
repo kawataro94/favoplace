@@ -1,20 +1,32 @@
 import { Fragment } from "react/jsx-runtime";
-import { IconCalendar, IconHeart } from "@tabler/icons-react";
-import { Group, SimpleGrid, Text, useMantineTheme } from "@mantine/core";
+import { IconCalendar, IconHeart, IconStar } from "@tabler/icons-react";
+import {
+  Group,
+  SimpleGrid,
+  Text,
+  Tooltip,
+  useMantineTheme,
+} from "@mantine/core";
 import { ImageCard } from "@web/components/ui/image-card";
 
 export function PlacePhotoGallery({
   placePhotos,
   handleFavoritePhotoUpdate,
+  handleThumbnailPhotoUpdate,
 }: {
   placePhotos: {
     id: string;
     pathname: string;
     isFavorite: boolean;
+    isThumbnail: boolean;
   }[];
   handleFavoritePhotoUpdate: (
     placePhotoId: string,
     isFavorite: boolean
+  ) => Promise<void>;
+  handleThumbnailPhotoUpdate?: (
+    placePhotoId: string,
+    isThumbnail: boolean
   ) => Promise<void>;
 }) {
   const theme = useMantineTheme();
@@ -25,7 +37,7 @@ export function PlacePhotoGallery({
       spacing={{ md: 20 }}
       verticalSpacing={{ md: 20 }}
     >
-      {placePhotos.map(({ id, pathname, isFavorite }) => (
+      {placePhotos.map(({ id, pathname, isFavorite, isThumbnail }) => (
         <Fragment key={pathname}>
           <ImageCard.Default pathname={pathname}>
             <Group justify="space-between" gap="xs" p="10px">
@@ -37,16 +49,35 @@ export function PlacePhotoGallery({
                 />
                 <Text size="sm">2024-12-20</Text>
               </Group>
-              <IconHeart
-                size={20}
-                stroke={1.5}
-                color={isFavorite ? theme.colors.pink[6] : undefined}
-                {...{
-                  fill: isFavorite ? theme.colors.pink[6] : "#fff",
-                }}
-                cursor="pointer"
-                onClick={() => handleFavoritePhotoUpdate(id, !isFavorite)}
-              />
+
+              <Group gap="6px">
+                {handleThumbnailPhotoUpdate && (
+                  <Tooltip label="Thumbnail Photo" position="bottom">
+                    <IconStar
+                      size={20}
+                      stroke={1.5}
+                      color={theme.colors.yellow[6]}
+                      {...{
+                        fill: isThumbnail ? theme.colors.yellow[6] : "#fff",
+                      }}
+                      cursor="pointer"
+                      onClick={() =>
+                        handleThumbnailPhotoUpdate(id, !isThumbnail)
+                      }
+                    />
+                  </Tooltip>
+                )}
+                <IconHeart
+                  size={20}
+                  stroke={1.5}
+                  color={theme.colors.pink[6]}
+                  {...{
+                    fill: isFavorite ? theme.colors.pink[6] : "#fff",
+                  }}
+                  cursor="pointer"
+                  onClick={() => handleFavoritePhotoUpdate(id, !isFavorite)}
+                />
+              </Group>
             </Group>
           </ImageCard.Default>
         </Fragment>

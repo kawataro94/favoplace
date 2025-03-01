@@ -17,6 +17,7 @@ export const FETCH_PLACE = gql`
         id
         pathname
         isFavorite
+        isThumbnail
       }
     }
   }

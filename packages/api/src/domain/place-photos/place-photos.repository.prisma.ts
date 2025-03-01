@@ -28,6 +28,11 @@ export class PlacePhotosRepository implements IPlacePhotosRepository {
     placePhotoId: string;
     isThumbnail: boolean;
   }) {
+    await this.prisma.placePhoto.updateMany({
+      where: { isThumbnail: true },
+      data: { isThumbnail: false },
+    });
+
     return await this.prisma.placePhoto.update({
       where: { id: placePhotoId },
       data: {

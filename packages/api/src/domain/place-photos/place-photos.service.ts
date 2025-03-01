@@ -41,6 +41,8 @@ export class PlacePhotosService {
     isFavorite: boolean;
     isThumbnail: boolean;
   }> {
+    this.repository.updateIsThumbnail({ placePhotoId, isThumbnail });
+
     return this.repository.updateIsThumbnail({ placePhotoId, isThumbnail });
   }
 

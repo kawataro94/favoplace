@@ -8,6 +8,7 @@ export const FETCH_PLACE_WITH_ALL_PHOTOS = gql`
         id
         pathname
         isFavorite
+        isThumbnail
       }
     }
   }

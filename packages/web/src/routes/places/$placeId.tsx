@@ -31,6 +31,7 @@ function RouteComponent() {
         id: string;
         pathname: string;
         isFavorite: boolean;
+        isThumbnail: boolean;
       }[];
     };
   }>({
