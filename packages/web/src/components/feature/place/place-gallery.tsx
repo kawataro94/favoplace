@@ -25,8 +25,8 @@ export function PlaceGallery({
   return (
     <SimpleGrid
       cols={{ base: 1, sm: 2, md: 4 }}
-      spacing={{ md: 20 }}
-      verticalSpacing={{ md: 20 }}
+      spacing={{ base: 10, md: 20 }}
+      verticalSpacing={{ base: 30, md: 20 }}
     >
       {places.map(({ id, name, visitCount, placeThumbnails }) => (
         <Fragment key={name}>

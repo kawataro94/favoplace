@@ -30,14 +30,14 @@ export function PlacePhotoUploader({
   }
 
   return (
-    <Flex align={"end"} gap={12}>
+    <Flex align={"end"} gap={12} direction={{ base: "column", md: "row" }}>
       <FileInput
         label="Photos Upload"
         placeholder="Select files"
         clearable
         multiple
         onChange={setFiles}
-        w={400}
+        w={{ base: "100%", md: 400 }}
       />
       <Button onClick={handleFilesUpload}>Upload</Button>
     </Flex>

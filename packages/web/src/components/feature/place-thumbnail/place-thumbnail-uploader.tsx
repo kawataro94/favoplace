@@ -25,13 +25,13 @@ export function PlaceThumbnailUploader({
   }
 
   return (
-    <Flex align={"end"} gap={12}>
+    <Flex align={"end"} gap={12} direction={{ base: "column", md: "row" }}>
       <FileInput
         label="Thumbnail Upload"
         placeholder="Select file"
         clearable
         onChange={(file) => setFile(file!)}
-        w={400}
+        w={{ base: "100%", md: 400 }}
       />
       <Button onClick={handleFileUpload}>Upload</Button>
     </Flex>

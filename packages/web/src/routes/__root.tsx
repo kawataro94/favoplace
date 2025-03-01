@@ -48,7 +48,7 @@ function RootComponent() {
         </SignedIn>
       </div>
       <hr />
-      <div className="p-20">
+      <div className="p-10 md:p-20">
         <Outlet />
       </div>
       <TanStackRouterDevtools position="bottom-right" />
