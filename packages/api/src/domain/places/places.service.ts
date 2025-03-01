@@ -11,12 +11,12 @@ type Place = {
   description: string;
   visitCount: number;
   visitHistories: { id: string; userId: string; placeId: string; date: Date }[];
-  placeThumbnails: { id: string; placeId: string; pathname: string }[];
   placePhotos: {
     id: string;
     placeId: string;
     pathname: string;
     isFavorite: boolean;
+    isThumbnail: boolean;
   }[];
 };
 
@@ -47,9 +47,7 @@ export class PlacesService {
     userId,
     name,
     description,
-  }: NewPlaceInput): Promise<
-    Omit<Place, 'visitHistories' | 'placeThumbnails' | 'placePhotos'>
-  > {
+  }: NewPlaceInput): Promise<Omit<Place, 'visitHistories' | 'placePhotos'>> {
     return await this.repository.create({ userId, name, description });
   }
 

@@ -38,9 +38,7 @@ export class PlacesResolver {
   @Mutation((returns) => Place)
   async addPlace(
     @Args('newPlaceData') newPlaceData: NewPlaceInput,
-  ): Promise<
-    Omit<Place, 'visitHistories' | 'placeThumbnails' | 'placePhotos'>
-  > {
+  ): Promise<Omit<Place, 'visitHistories' | 'placePhotos'>> {
     const place = await this.placesService.create(newPlaceData);
     pubSub.publish('placeAdded', { placeAdded: place });
     return place;

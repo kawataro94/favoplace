@@ -28,7 +28,7 @@ function PlaceComponent() {
       id: string;
       name: string;
       visitCount: number;
-      placeThumbnails: { pathname: string }[];
+      placePhotos: { pathname: string }[];
     }[]
   >([]);
 
@@ -36,7 +36,10 @@ function PlaceComponent() {
     if (!userId) return;
 
     (async function () {
-      const { places: _places } = await fetchPlaces({ userId });
+      const { places: _places } = await fetchPlaces({
+        userId,
+        isThumbnailPhotoOnly: true,
+      });
       setPlaces(_places);
     })();
   }, [userId]);

@@ -1,5 +1,5 @@
 export interface IPlacePhotosRepository {
-  update: ({
+  updateIsFavorite: ({
     placePhotoId,
     isFavorite,
   }: {
@@ -10,6 +10,20 @@ export interface IPlacePhotosRepository {
     placeId: string;
     pathname: string;
     isFavorite: boolean;
+    isThumbnail: boolean;
+  }>;
+  updateIsThumbnail: ({
+    placePhotoId,
+    isThumbnail,
+  }: {
+    placePhotoId: string;
+    isThumbnail: boolean;
+  }) => Promise<{
+    id: string;
+    placeId: string;
+    pathname: string;
+    isFavorite: boolean;
+    isThumbnail: boolean;
   }>;
   create: ({
     placeId,
@@ -22,5 +36,6 @@ export interface IPlacePhotosRepository {
     placeId: string;
     pathname: string;
     isFavorite: boolean;
+    isThumbnail: boolean;
   }>;
 }

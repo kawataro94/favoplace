@@ -7,7 +7,6 @@ import { useUserContext } from "@web/lib/user-context";
 import { UPDATE_PLACE_PHOTO_FAVORITE } from "@web/lib/update-place-photo-favorite";
 import { PlaceDetails } from "@web/components/feature/place/place-details";
 import { VisitHistoryTable } from "@web/components/feature/visit-history/visit-history-table";
-import { PlaceThumbnailUploader } from "@web/components/feature/place-thumbnail/place-thumbnail-uploader";
 import { PlacePhotoUploader } from "@web/components/feature/place-photo/place-photo-uploader";
 import { PlacePhotoGallery } from "@web/components/feature/place-photo/place-photo-gallery";
 import { useNotification } from "@web/components/ui/use-notification";
@@ -71,8 +70,6 @@ function RouteComponent() {
         description={data?.place.description ?? ""}
         visitCount={data?.place.visitCount ?? 0}
       />
-      <Space h="md" />
-      <PlaceThumbnailUploader userId={userId} placeId={placeId} />
       <Space h="md" />
       <PlacePhotoUploader userId={userId} placeId={placeId} />
       <Space h="xs" />

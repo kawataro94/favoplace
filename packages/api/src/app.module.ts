@@ -5,14 +5,12 @@ import { DirectiveLocation, GraphQLDirective } from 'graphql';
 import { upperDirectiveTransformer } from './common/directives/upper-case.directive';
 import { DateScalar } from './common/scalars/date.scalar';
 import { PlacePhotosModule } from './domain/place-photos/place-photos.module';
-import { PlaceThumbnailsModule } from './domain/place-thumbnails/place-thumbnails.module';
 import { PlacesModule } from './domain/places/places.module';
 import { VisitHistoriesModule } from './domain/visit-histories/visit-histories.module';
 
 @Module({
   imports: [
     PlacePhotosModule,
-    PlaceThumbnailsModule,
     PlacesModule,
     VisitHistoriesModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({

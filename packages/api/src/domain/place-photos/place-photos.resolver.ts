@@ -19,6 +19,17 @@ export class PlacePhotosResolver {
   }
 
   @Mutation((returns) => PlacePhoto)
+  async updatePlacePhotoThumbnail(
+    @Args('placePhotoId') placePhotoId: string,
+    @Args('isThumbnail') isThumbnail: boolean,
+  ): Promise<PlacePhoto> {
+    return this.placePhotosService.updateThumbnail({
+      placePhotoId,
+      isThumbnail,
+    });
+  }
+
+  @Mutation((returns) => PlacePhoto)
   async uploadPlacePhoto(
     @Args('userId') userId: string,
     @Args('placeId') placeId: string,

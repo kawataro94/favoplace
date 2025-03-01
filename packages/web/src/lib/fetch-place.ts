@@ -1,7 +1,7 @@
 import { gql } from "urql";
 
 export const FETCH_PLACE = gql`
-  query ($placeId: String!, $userId: String!, $isFavoritePhotoOnly: Boolean!) {
+  query ($placeId: String!, $userId: String!, $isFavoritePhotoOnly: Boolean) {
     place(
       id: $placeId
       userId: $userId

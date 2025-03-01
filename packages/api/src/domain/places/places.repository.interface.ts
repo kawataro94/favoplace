@@ -19,26 +19,20 @@ export interface IPlacesRepository {
       date: Date;
       placeId: string;
     }[];
-    placeThumbnails: {
-      id: string;
-      pathname: string;
-      placeId: string;
-    }[];
     placePhotos: {
       id: string;
       pathname: string;
       placeId: string;
       isFavorite: boolean;
+      isThumbnail: boolean;
     }[];
   }>;
   findAll: ({
     userId,
-    skip,
-    take,
+    isThumbnailPhotoOnly,
   }: {
     userId: string;
-    skip: number;
-    take: number;
+    isThumbnailPhotoOnly?: boolean;
   }) => Promise<
     {
       id: string;
@@ -52,16 +46,12 @@ export interface IPlacesRepository {
         date: Date;
         placeId: string;
       }[];
-      placeThumbnails: {
-        id: string;
-        pathname: string;
-        placeId: string;
-      }[];
       placePhotos: {
         id: string;
         pathname: string;
         placeId: string;
         isFavorite: boolean;
+        isThumbnail: boolean;
       }[];
     }[]
   >;

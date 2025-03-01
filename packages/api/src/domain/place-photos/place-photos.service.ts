@@ -23,8 +23,25 @@ export class PlacePhotosService {
     placeId: string;
     pathname: string;
     isFavorite: boolean;
+    isThumbnail: boolean;
   }> {
-    return this.repository.update({ placePhotoId, isFavorite });
+    return this.repository.updateIsFavorite({ placePhotoId, isFavorite });
+  }
+
+  async updateThumbnail({
+    placePhotoId,
+    isThumbnail,
+  }: {
+    placePhotoId: string;
+    isThumbnail: boolean;
+  }): Promise<{
+    id: string;
+    placeId: string;
+    pathname: string;
+    isFavorite: boolean;
+    isThumbnail: boolean;
+  }> {
+    return this.repository.updateIsThumbnail({ placePhotoId, isThumbnail });
   }
 
   async create({
@@ -42,6 +59,7 @@ export class PlacePhotosService {
     placeId: string;
     pathname: string;
     isFavorite: boolean;
+    isThumbnail: boolean;
   }> {
     const { pathname } = await upload({ placeId, userId, file });
     return this.repository.create({ placeId, pathname });

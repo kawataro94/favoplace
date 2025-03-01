@@ -13,4 +13,7 @@ export class PlacePhoto {
 
   @Field()
   isFavorite: boolean;
+
+  @Field()
+  isThumbnail: boolean;
 }

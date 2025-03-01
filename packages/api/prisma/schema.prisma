@@ -16,7 +16,6 @@ model Place {
   visitCount  Int
 
   visitHistories      VisitHistory[]
-  placeThumbnails     PlaceThumbnail[]
   placePhotos         PlacePhoto[]
 }
 
@@ -29,18 +28,11 @@ model VisitHistory {
   placeId String?
 }
 
-model PlaceThumbnail {
-  id       String @id @default(cuid())
-  pathname String @unique
-
-  place   Place?  @relation(fields: [placeId], references: [id])
-  placeId String?
-}
-
 model PlacePhoto {
-  id         String  @id @default(cuid())
-  pathname   String  @unique
-  isFavorite Boolean
+  id          String  @id @default(cuid())
+  pathname    String  @unique
+  isFavorite  Boolean
+  isThumbnail Boolean
 
   place   Place?  @relation(fields: [placeId], references: [id])
   placeId String?

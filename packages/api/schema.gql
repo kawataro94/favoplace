@@ -10,13 +10,7 @@ type PlacePhoto {
   placeId: ID!
   pathname: String!
   isFavorite: Boolean!
-}
-
-"""placeThumbnail"""
-type PlaceThumbnail {
-  id: ID!
-  placeId: ID!
-  pathname: String!
+  isThumbnail: Boolean!
 }
 
 """visitHistory"""
@@ -35,7 +29,6 @@ type Place {
   description: String
   visitCount: Float!
   visitHistories: [VisitHistory!]!
-  placeThumbnails: [PlaceThumbnail!]!
   placePhotos: [PlacePhoto!]!
 }
 
@@ -44,13 +37,13 @@ scalar Date
 
 type Query {
   place(id: String!, userId: String!, isFavoritePhotoOnly: Boolean): Place!
-  places(userId: String!, skip: Int! = 0, take: Int! = 25): [Place!]!
+  places(userId: String!, isThumbnailPhotoOnly: Boolean): [Place!]!
 }
 
 type Mutation {
   updatePlacePhotoFavorite(placePhotoId: String!, isFavorite: Boolean!): PlacePhoto!
+  updatePlacePhotoThumbnail(placePhotoId: String!, isThumbnail: Boolean!): PlacePhoto!
   uploadPlacePhoto(userId: String!, placeId: String!, file: Upload!): PlacePhoto!
-  uploadPlaceThumbnail(userId: String!, placeId: String!, file: Upload!): PlaceThumbnail!
   addPlace(newPlaceData: NewPlaceInput!): Place!
   removePlace(id: String!, userId: String!): Boolean!
   addVisitHistory(newVisitHistoryData: NewVisitHistoryInput!): VisitHistory!

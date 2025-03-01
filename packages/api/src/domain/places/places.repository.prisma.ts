@@ -1,10 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import {
-  Place,
-  VisitHistory,
-  PlaceThumbnail,
-  PlacePhoto,
-} from '@prisma/client';
+import { Place, VisitHistory, PlacePhoto } from '@prisma/client';
 import { Prisma } from '@api/lib/prisma';
 import { PlacesArgs } from './dto/places.args';
 import { IPlacesRepository } from './places.repository.interface';
@@ -24,7 +19,6 @@ export class PlacesRepository implements IPlacesRepository {
   }): Promise<
     Place & {
       visitHistories: VisitHistory[];
-      placeThumbnails: PlaceThumbnail[];
       placePhotos: PlacePhoto[];
     }
   > {
@@ -32,10 +26,9 @@ export class PlacesRepository implements IPlacesRepository {
       where: { id, userId },
       include: {
         visitHistories: true,
-        placeThumbnails: true,
         placePhotos: {
           where: {
-            isFavorite: isFavoritePhotoOnly,
+            isFavorite: isFavoritePhotoOnly || undefined,
           },
           orderBy: [{ id: 'desc' }],
         },
@@ -46,7 +39,6 @@ export class PlacesRepository implements IPlacesRepository {
   async findAll(placesArgs: PlacesArgs): Promise<
     (Place & {
       visitHistories: VisitHistory[];
-      placeThumbnails: PlaceThumbnail[];
       placePhotos: PlacePhoto[];
     })[]
   > {
@@ -55,8 +47,9 @@ export class PlacesRepository implements IPlacesRepository {
       orderBy: [{ visitCount: 'desc' }],
       include: {
         visitHistories: true,
-        placeThumbnails: true,
-        placePhotos: true,
+        placePhotos: {
+          where: { isThumbnail: placesArgs.isThumbnailPhotoOnly || undefined },
+        },
       },
     });
   }

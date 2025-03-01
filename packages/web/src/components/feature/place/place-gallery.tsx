@@ -19,7 +19,7 @@ export function PlaceGallery({
     id: string;
     name: string;
     visitCount: number;
-    placeThumbnails: { pathname: string }[];
+    placePhotos: { pathname: string }[];
   }[];
 }) {
   return (
@@ -28,13 +28,13 @@ export function PlaceGallery({
       spacing={{ base: 10, md: 20 }}
       verticalSpacing={{ base: 30, md: 20 }}
     >
-      {places.map(({ id, name, visitCount, placeThumbnails }) => (
+      {places.map(({ id, name, visitCount, placePhotos }) => (
         <Fragment key={name}>
           <ImageCard
             id={id}
             title={name}
             visitCount={visitCount}
-            placeThumbnails={placeThumbnails}
+            placePhotos={placePhotos}
           />
         </Fragment>
       ))}
@@ -46,15 +46,15 @@ function ImageCard({
   id,
   title,
   visitCount,
-  placeThumbnails,
+  placePhotos,
 }: {
   id: string;
   title: string;
   visitCount: number;
-  placeThumbnails: { pathname: string }[];
+  placePhotos: { pathname: string }[];
 }) {
   const theme = useMantineTheme();
-  const hasImage = !!placeThumbnails.length;
+  const hasImage = !!placePhotos.length;
 
   return (
     <Card p="md" shadow="lg" {...stylex.props(styles.card)} radius="md">
@@ -63,7 +63,7 @@ function ImageCard({
           <div
             {...stylex.props(styles.image)}
             style={{
-              backgroundImage: `url(${import.meta.env.PUBLIC_R2_URL}/${placeThumbnails[0].pathname})`,
+              backgroundImage: `url(${import.meta.env.PUBLIC_R2_URL}/${placePhotos[0].pathname})`,
             }}
           />
           <div {...stylex.props(styles.overlay)} />

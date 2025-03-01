@@ -1,21 +1,27 @@
 import { client } from "./graphql-request";
 
-export async function fetchPlaces({ userId }: { userId: string }): Promise<{
+export async function fetchPlaces({
+  userId,
+  isThumbnailPhotoOnly,
+}: {
+  userId: string;
+  isThumbnailPhotoOnly?: boolean;
+}): Promise<{
   places: {
     id: string;
     name: string;
     visitCount: number;
-    placeThumbnails: { pathname: string }[];
+    placePhotos: { pathname: string }[];
   }[];
 }> {
-  const variables = { userId };
+  const variables = { userId, isThumbnailPhotoOnly };
   const document = `
-    query ($userId: String!) {
-      places(userId: $userId) {
+    query ($userId: String!, $isThumbnailPhotoOnly: Boolean) {
+      places(userId: $userId, isThumbnailPhotoOnly: $isThumbnailPhotoOnly) {
         id
         name
         visitCount
-        placeThumbnails {
+        placePhotos {
           pathname
         }
       }
